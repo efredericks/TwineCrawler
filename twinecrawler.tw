@@ -60,6 +60,12 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 <section class="map_content">\
 <h2><<= setup.map.map[setup.player.row][setup.player.col].title>></h2>\
 <p><<= setup.map.map[setup.player.row][setup.player.col].description>></p>\
+<section class="map_objects">\
+  <<set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) >>\
+  <<for _i to 0; _i lt _objs.length; _i++>>\
+    <<= _objs[_i].name>>
+  <</for>>\
+</section>\
 </section>\
 <section class="map">\
   <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\

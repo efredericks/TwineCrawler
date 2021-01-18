@@ -80,6 +80,17 @@ class Room {
 		}
 	}	
 }
+
+setup.getInteractions = function(_map, _player, _friends) {
+  let _objs = Array();
+  for (let f = 0; f < _friends.length; f++) {
+	  if (_friends[f].row == _player.row && _friends[f].col == _player.col) {
+      _objs.push(_friends[f]);
+    }
+  }
+  return _objs;
+}
+
 setup.drawMap = function(_map, _player, _friends) {
   let _render = "<div class='map_wrapper'>";
   //let _render = "<table cellspacing='0'>";

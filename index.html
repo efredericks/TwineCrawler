@@ -743,6 +743,17 @@ class Room {
 		}
 	}	
 }
+
+setup.getInteractions = function(_map, _player, _friends) {
+  let _objs = Array();
+  for (let f = 0; f < _friends.length; f++) {
+	  if (_friends[f].row == _player.row && _friends[f].col == _player.col) {
+      _objs.push(_friends[f]);
+    }
+  }
+  return _objs;
+}
+
 setup.drawMap = function(_map, _player, _friends) {
   let _render = "<div class='map_wrapper'>";
   //let _render = "<table cellspacing='0'>";
@@ -1105,6 +1116,12 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 &lt;section class=&quot;map_content&quot;&gt;\
 &lt;h2&gt;&lt;&lt;= setup.map.map[setup.player.row][setup.player.col].title&gt;&gt;&lt;/h2&gt;\
 &lt;p&gt;&lt;&lt;= setup.map.map[setup.player.row][setup.player.col].description&gt;&gt;&lt;/p&gt;\
+&lt;section class=&quot;map_objects&quot;&gt;\
+  &lt;&lt;set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) &gt;&gt;\
+  &lt;&lt;for _i to 0; _i lt _objs.length; _i++&gt;&gt;\
+    &lt;&lt;= _objs[_i].name&gt;&gt;
+  &lt;&lt;/for&gt;&gt;\
+&lt;/section&gt;\
 &lt;/section&gt;\
 &lt;section class=&quot;map&quot;&gt;\
   &lt;&lt;= setup.drawMap(setup.map, setup.player, setup.enemies) &gt;&gt;\
