@@ -6,12 +6,60 @@ const RACE = {
   ELF:   'elf',
 }
 Object.freeze(RACE);
-const RACE_MOD = {
+const CHAR_MOD = {
   NORMAL:  'normal',
   VAMPIRE: 'vampire',
   UNDEAD:  'undead',
 }
-Object.freeze(RACE_MOD);
+Object.freeze(CHAR_MOD);
+
+const charAdjectives = [
+  'small',
+  'tiny',
+  'miniscule',
+  'midsized',
+  'average',
+  'large',
+  'massive'
+];
+Object.freeze(charAdjectives);
+
+setup.getCharInfo = function(char) {
+  let _charinfo = "a"; 
+  if (['a','e','i','o','u'].indexOf(char.char_size.charAt(0)) >= 0)  // vowel?
+    _charinfo += "n";
+  _charinfo += " " + char.char_size; 
+
+  switch (char.char_mod) {
+    case CHAR_MOD.NORMAL:
+    default:
+      break;
+    case CHAR_MOD.VAMPIRE:
+      _charinfo += "vampire";
+      break;
+    case CHAR_MOD.UNDEAD:
+      _charinfo += "n undead";
+      break;
+  }
+
+  _charinfo += " ";
+  switch (char.race) {
+    case 0:
+    default:
+      _charinfo += "human";
+      break;
+    case 1:
+      _charinfo += "orc";
+      break;
+    case 2:
+      _charinfo += "troll";
+      break;
+    case 3:
+      _charinfo += "elf";
+      break;
+  }
+  return _charinfo;
+}
 
 const ROOM_TYPES = {
 	NORMAL:  0,

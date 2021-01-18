@@ -63,7 +63,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 <section class="map_objects">\
   <<set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) >>\
   <<for _i to 0; _i lt _objs.length; _i++>>\
-    <<= _objs[_i].name>>
+    <p>You see <b><<= _objs[_i].name>></b>, <<= setup.getCharInfo(_objs[_i])>> in this room.</p>
   <</for>>\
 </section>\
 </section>\

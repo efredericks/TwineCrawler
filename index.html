@@ -638,12 +638,60 @@ const RACE = {
   ELF:   'elf',
 }
 Object.freeze(RACE);
-const RACE_MOD = {
+const CHAR_MOD = {
   NORMAL:  'normal',
   VAMPIRE: 'vampire',
   UNDEAD:  'undead',
 }
-Object.freeze(RACE_MOD);
+Object.freeze(CHAR_MOD);
+
+const charAdjectives = [
+  'small',
+  'tiny',
+  'miniscule',
+  'midsized',
+  'average',
+  'large',
+  'massive'
+];
+Object.freeze(charAdjectives);
+
+setup.getCharInfo = function(char) {
+  let _charinfo = "a"; 
+  if (['a','e','i','o','u'].indexOf(char.char_size.charAt(0)) >= 0)  // vowel?
+    _charinfo += "n";
+  _charinfo += " " + char.char_size; 
+
+  switch (char.char_mod) {
+    case CHAR_MOD.NORMAL:
+    default:
+      break;
+    case CHAR_MOD.VAMPIRE:
+      _charinfo += "vampire";
+      break;
+    case CHAR_MOD.UNDEAD:
+      _charinfo += "n undead";
+      break;
+  }
+
+  _charinfo += " ";
+  switch (char.race) {
+    case 0:
+    default:
+      _charinfo += "human";
+      break;
+    case 1:
+      _charinfo += "orc";
+      break;
+    case 2:
+      _charinfo += "troll";
+      break;
+    case 3:
+      _charinfo += "elf";
+      break;
+  }
+  return _charinfo;
+}
 
 const ROOM_TYPES = {
 	NORMAL:  0,
@@ -671,14 +719,35 @@ setup.NUM_ENEMIES = 4;
 
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
-  constructor(name, row, col, race, race_mod, hp) {
+  constructor(name, row, col, race, char_mod, hp) {
     this.name     = name;
     this.row      = row;
     this.col      = col;
     this.race     = race;
-    this.race_mod = race_mod;
+    this.char_mod = char_mod;
     this.hp       = hp;
+    this.char_size   = randomListItem(charAdjectives);
+    //this.description = this.genDescription();
   }
+  /*
+  genDescription() {
+    let _desc = "";
+    _desc += charAdjectives;
+    switch (this.race) {
+      case RACE.HUMAN:
+      default:
+        break;
+      case RACE.DWARF:
+        break;
+      case RACE.ELF:
+        break;
+      case RACE.ORC:
+        break;
+      case RACE.TROLL:
+        break;
+    }
+    return _desc;
+    */
 }
 class GameMap {
   constructor(width, height) {
@@ -966,7 +1035,7 @@ setup.loadModules.then(function() {
   for (let i = 0; i < setup.NUM_ENEMIES; i++) {
     let _n = "Enemy " + i;
     let _r = randomEnum(RACE);
-    let _rm = randomEnum(RACE_MOD);
+    let _rm = randomEnum(CHAR_MOD);
     let _row = randomInt(1, setup.MAP_HEIGHT-1);
     let _col = randomInt(1, setup.MAP_WIDTH-1);
     setup.enemies.push(new Character(_n, _row, _col, _r, _rm, 100));
@@ -1119,7 +1188,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 &lt;section class=&quot;map_objects&quot;&gt;\
   &lt;&lt;set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) &gt;&gt;\
   &lt;&lt;for _i to 0; _i lt _objs.length; _i++&gt;&gt;\
-    &lt;&lt;= _objs[_i].name&gt;&gt;
+    &lt;p&gt;You see &lt;b&gt;&lt;&lt;= _objs[_i].name&gt;&gt;&lt;/b&gt;, &lt;&lt;= setup.getCharInfo(_objs[_i])&gt;&gt; in this room.&lt;/p&gt;
   &lt;&lt;/for&gt;&gt;\
 &lt;/section&gt;\
 &lt;/section&gt;\

@@ -8,14 +8,35 @@
 
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
-  constructor(name, row, col, race, race_mod, hp) {
+  constructor(name, row, col, race, char_mod, hp) {
     this.name     = name;
     this.row      = row;
     this.col      = col;
     this.race     = race;
-    this.race_mod = race_mod;
+    this.char_mod = char_mod;
     this.hp       = hp;
+    this.char_size   = randomListItem(charAdjectives);
+    //this.description = this.genDescription();
   }
+  /*
+  genDescription() {
+    let _desc = "";
+    _desc += charAdjectives;
+    switch (this.race) {
+      case RACE.HUMAN:
+      default:
+        break;
+      case RACE.DWARF:
+        break;
+      case RACE.ELF:
+        break;
+      case RACE.ORC:
+        break;
+      case RACE.TROLL:
+        break;
+    }
+    return _desc;
+    */
 }
 class GameMap {
   constructor(width, height) {
@@ -303,7 +324,7 @@ setup.loadModules.then(function() {
   for (let i = 0; i < setup.NUM_ENEMIES; i++) {
     let _n = "Enemy " + i;
     let _r = randomEnum(RACE);
-    let _rm = randomEnum(RACE_MOD);
+    let _rm = randomEnum(CHAR_MOD);
     let _row = randomInt(1, setup.MAP_HEIGHT-1);
     let _col = randomInt(1, setup.MAP_WIDTH-1);
     setup.enemies.push(new Character(_n, _row, _col, _r, _rm, 100));
