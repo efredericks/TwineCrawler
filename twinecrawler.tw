@@ -1,0 +1,182 @@
+:: StoryTitle
+TwineCrawler
+
+:: StoryData
+{
+	"ifid": "F810BEB9-79D6-447D-BE89-41C8C63202B8",
+	"format": "SugarCube",
+	"format-version": "2.31.1",
+	"start": "Begin",
+	"zoom": 1
+}
+
+:: Story Stylesheet [stylesheet]
+/* $ tweego -o index.html twinecrawler.tw styles scripts */
+
+:: Story JavaScript [script]
+
+:: PassageFooter [PassageFooter]
+/*<section class="map">\
+  <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\
+</section>\*/
+
+:: StoryInit 
+
+:: StoryMenu
+<<nobr>>
+<div class="navContainer">
+<<for _i = 0 ; _i < 9 ; ++_i>>
+    <<button "button _i">>
+        /* insert function here */
+    <</button>>
+<</for>>
+</div>
+<</nobr>>
+
+/*
+<<set _validMoves to setup.checkValidMoves(setup.map, $player.row, $player.col)>>\
+<<for _i to 0; _i lt _validMoves.length; _i++>>\
+  <<capture _i, $player, _newRow, _newCol>>\
+    <<set _newRow to _validMoves[_i][0]>>\
+    <<set _newCol to _validMoves[_i][1]>>\
+    <<set _temp_title to String(_newRow) + ":" + String(_newCol) + "::" + setup.map[_newRow][_newCol].title>>\
+    <<link [[_temp_title|ProcGen]]>>\
+      <<set $player.last_row = $player.row>>\
+      <<set $player.last_col = $player.col>>\
+      <<set $player.row = _newRow>>\
+      <<set $player.col = _newCol>>\
+    <</link>>\
+  <</capture>>\
+<</for>>
+<<run setup.tickGame(setup.map, $player, setup.friends)>>
+</div>
+*/
+
+
+:: Begin 
+<<when setup.loadModules>>\
+Welcome to TwineCrawler <<= setup.player.name>>!\
+
+<section class="map_content">\
+<h2><<= setup.map.map[setup.player.row][setup.player.col].title>></h2>\
+<p><<= setup.map.map[setup.player.row][setup.player.col].description>></p>\
+</section>\
+<section class="map">\
+  <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\
+</section>\
+/* This needs to be a call to javascript to also check collisions with env, enemies, etc */\
+<section class="nav">\
+  <<set _validMoves to setup.checkValidMoves(setup.map.map, setup.player.row, setup.player.col)>>\
+    /*<<link [[_temp_title|ProcGen]]>>\
+      <<set $player.last_row = $player.row>>\
+      <<set $player.last_col = $player.col>>\
+      <<set $player.row = _newRow>>\
+      <<set $player.col = _newCol>>\
+    <</link>>\*/\
+  <<if setup.player.row > 0 and setup.player.col > 0>>\
+    <span>\
+      <<link [[Up Left|Begin]]>>\
+        <<set setup.player.row = setup.player.row - 1>>\
+        <<set setup.player.col = setup.player.col - 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Up Left</span>\
+  <</if>>\
+  <<if setup.player.row > 0>>\
+    <span>\
+      <<link [[Up|Begin]]>>\
+        <<set setup.player.row = setup.player.row - 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Up</span>\
+  <</if>>\
+  <<if setup.player.col < (setup.MAP_WIDTH-1) and setup.player.row > 0>>\
+    <span>\
+      <<link [[Up Right|Begin]]>>\
+        <<set setup.player.row = setup.player.row - 1>>\
+        <<set setup.player.col = setup.player.col + 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Up Right</span>\
+  <</if>>\
+
+  <<if setup.player.col > 0>>\
+    <span>\
+      <<link [[Left|Begin]]>>\
+        <<set setup.player.col = setup.player.col - 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Left</span>\
+  <</if>>\
+  <span>\
+    <<link [[Stay|Begin]]>>\
+      <<= setup.tickGame()>>\\
+    <</link>>\
+  </span>\
+  <<if setup.player.col < (setup.MAP_WIDTH-1)>>\
+    <span>\
+      <<link [[Right|Begin]]>>\
+        <<set setup.player.col = setup.player.col + 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Right</span>\
+  <</if>>\
+
+  <<if setup.player.row < (setup.MAP_HEIGHT-1) and setup.player.col > 0>>\
+    <span>\
+      <<link [[Down Left|Begin]]>>\
+        <<set setup.player.row = setup.player.row + 1>>\
+        <<set setup.player.col = setup.player.col - 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Down Left</span>\
+  <</if>>\
+  <<if setup.player.row < (setup.MAP_HEIGHT-1)>>\
+    <span>\
+      <<link [[Down|Begin]]>>\
+        <<set setup.player.row = setup.player.row + 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Down</span>\
+  <</if>>\
+  <<if setup.player.row < (setup.MAP_HEIGHT-1) and setup.player.col < (setup.MAP_WIDTH-1)>>\
+    <span>\
+      <<link [[Down Right|Begin]]>>\
+        <<set setup.player.row = setup.player.row + 1>>\
+        <<set setup.player.col = setup.player.col + 1>>\
+        <<= setup.tickGame()>>\\
+      <</link>>\
+    </span>\
+  <<else>>\
+    <span>Down Right</span>\
+  <</if>>\
+</section>\
+/*
+<<nobr>>
+<div class="navContainer">
+<<for _i = 0 ; _i < 9 ; ++_i>>
+    <<button "button _i">>
+        // insert function here 
+    <</button>>
+<</for>>
+</div>
+<</nobr>>
+*/\
+<</when>>\
+/* 
+  <<=UI.alert("You smell of elderberries");>>
+*/
