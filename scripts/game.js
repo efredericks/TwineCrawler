@@ -334,6 +334,72 @@ setup.loadModules.then(function() {
   setup.map.map[0][0].blocked = false;
   //console.log(setup.map);
 
+
+  $(function() {
+    jQuery(document).keyup((event) => {
+      let _validMoves = setup.checkValidMoves(setup.map.map, setup.player.row, setup.player.col);
+      let _check = null;
+      switch (event.which) {
+        case 38: // up arrow
+        case 75: // k
+          _check = [setup.player.row-1, setup.player.col];
+          break;
+        
+        case 40: // down arrow 
+        case 74: // j
+          _check = [setup.player.row+1, setup.player.col];
+          break;
+
+        case 37: // left arrow 
+        case 72: // h
+          _check = [setup.player.row, setup.player.col-1];
+          break;
+
+        case 39: // right arrow 
+        case 76: // l
+          _check = [setup.player.row, setup.player.col+1];
+          break;
+
+        case 78: // n (down right)
+          _check = [setup.player.row+1, setup.player.col+1];
+          break;
+
+        case 66: // b (down left)
+          _check = [setup.player.row+1, setup.player.col-1];
+          break;
+
+        case 85: // u (up right)
+          _check = [setup.player.row-1, setup.player.col+1];
+          break;
+
+        case 89: // y (up left)
+          _check = [setup.player.row-1, setup.player.col-1];
+          break;
+
+        default: // trap keys not doing anything
+          _check = null;
+          break;
+      }
+
+      if (_check != null) { // check if move exists
+        let _exists = false;
+
+        for (let i = 0; i < _validMoves.length; i++) {
+          if ((_check[0] == _validMoves[i][0]) && (_check[1] == _validMoves[i][1])) {
+            _exists = true;
+
+            setup.player.row = _check[0];
+            setup.player.col = _check[1];
+
+            Engine.play("Begin");
+            break;
+          }
+        }
+      }
+    });
+  }());
+
+
 }).catch(function (err) {
   console.log(err);
 });

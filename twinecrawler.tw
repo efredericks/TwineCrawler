@@ -15,6 +15,7 @@ TwineCrawler
 
 :: Story JavaScript [script]
 
+
 :: PassageFooter [PassageFooter]
 /*<section class="map">\
   <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\
@@ -59,6 +60,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 
 <section class="map_content">\
 <h2><<= setup.map.map[setup.player.row][setup.player.col].title>></h2>\
+/* If no enemy, show description */
 <p><<= setup.map.map[setup.player.row][setup.player.col].description>></p>\
 <section class="map_objects">\
   <<set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) >>\
