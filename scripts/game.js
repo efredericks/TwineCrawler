@@ -40,7 +40,7 @@ class Character {
     */
 }
 class GameMap {
-  constructor(width, height) {
+  constructor(width, height, num_depths) {
     // Generate map 
     var simplex = new SimplexNoise();
   	this.map = new Array(height);
@@ -340,7 +340,7 @@ setup.loadModules.then(function() {
     let _col = randomInt(1, setup.MAP_WIDTH-1);
     setup.enemies.push(new Character(_n, _row, _col, _r, _rm, 100));
   }
-  setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT);
+  setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
   setup.map.map[0][0].discovered = true;
   setup.map.map[0][0].blocked = false;
   //console.log(setup.map);

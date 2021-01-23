@@ -43,6 +43,9 @@ body[data-tags~=start] {
 body[data-tags~=grave] {
   background-image: url("assets/backgrounds/wendy-scofield-AQkvtzM6eqU-unsplash-pixelated.png");
 }
+body[data-tags~=proc] {
+  background-image: url("assets/backgrounds/jordan-grider-lLP7s9Rpw7E-unsplash-pixelated.png");
+}
 
 
 

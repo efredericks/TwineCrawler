@@ -100,7 +100,7 @@ var saveAs=saveAs||navigator.msSaveBlob&&navigator.msSaveBlob.bind(navigator)||f
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://F810BEB9-79D6-447D-BE89-41C8C63202B8// --><tw-storydata name="TwineCrawler" startnode="4" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="F810BEB9-79D6-447D-BE89-41C8C63202B8" zoom="1" format="SugarCube" format-version="2.31.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "Story Stylesheet" */
+	<!-- UUID://F810BEB9-79D6-447D-BE89-41C8C63202B8// --><tw-storydata name="TwineCrawler" startnode="5" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="F810BEB9-79D6-447D-BE89-41C8C63202B8" zoom="1" format="SugarCube" format-version="2.31.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "Story Stylesheet" */
 /* $ tweego -o index.html twinecrawler.tw styles scripts */
 /* twine-user-stylesheet #2: "style.css" */
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -147,6 +147,9 @@ body[data-tags~=start] {
 }
 body[data-tags~=grave] {
   background-image: url("assets/backgrounds/wendy-scofield-AQkvtzM6eqU-unsplash-pixelated.png");
+}
+body[data-tags~=proc] {
+  background-image: url("assets/backgrounds/jordan-grider-lLP7s9Rpw7E-unsplash-pixelated.png");
 }
 
 
@@ -652,6 +655,12 @@ c/o: https://qjzhvmqlzvoo5lqnrvuhmg-on.drv.tw/UInv/Sample_Code.html#Drunk%20Text
 .poem {
   font-style: italic;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "Story JavaScript" */
+/*
+Images:
+* https://unsplash.com/photos/AQkvtzM6eqU
+* https://unsplash.com/photos/N9VsHXwWB-8
+* https://unsplash.com/photos/lLP7s9Rpw7E
+*/
 /* twine-user-script #2: "constants.js" */
 const RACE = {
   HUMAN: 'human',
@@ -731,6 +740,7 @@ Object.freeze(ROOM_TYPES);
 setup.MAP_WIDTH   = 30;
 setup.MAP_HEIGHT  = 15;
 setup.NUM_ENEMIES = 4;
+setup.NUM_FLOORS  = 7;
 /* twine-user-script #3: "game.js" */
 /*
 * game.js
@@ -774,7 +784,7 @@ class Character {
     */
 }
 class GameMap {
-  constructor(width, height) {
+  constructor(width, height, num_depths) {
     // Generate map 
     var simplex = new SimplexNoise();
   	this.map = new Array(height);
@@ -1074,7 +1084,7 @@ setup.loadModules.then(function() {
     let _col = randomInt(1, setup.MAP_WIDTH-1);
     setup.enemies.push(new Character(_n, _row, _col, _r, _rm, 100));
   }
-  setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT);
+  setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
   setup.map.map[0][0].discovered = true;
   setup.map.map[0][0].blocked = false;
   //console.log(setup.map);
@@ -1299,7 +1309,114 @@ class Room {
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;run setup.tickGame(setup.map, $player, setup.friends)&gt;&gt;
 &lt;/div&gt;
-*/</tw-passagedata><tw-passagedata pid="4" name="Begin" tags="start" position="475,100" size="100,100">/* https://etc.usf.edu/lit2go/147/the-works-of-edgar-allan-poe/5260/ulalume/ */\
+*/</tw-passagedata><tw-passagedata pid="4" name="Poem" tags="" position="475,100" size="100,100">&lt;div class=&quot;poem&quot;&gt;
+The skies they were ashen and sober;
+The leaves they were crisped and sere—
+The leaves they were withering and sere;
+It was night in the lonesome October
+Of my most immemorial year;
+It was hard by the dim lake of Auber,
+In the misty mid region of Weir—
+It was down by the dank tarn of Auber,
+In the ghoul—haunted woodland of Weir.
+
+Here once, through an alley Titanic,
+Of cypress, I roamed with my Soul—
+Of cypress, with Psyche, my Soul.
+There were days when my heart was volcanic
+As the scoriac rivers that roll—
+As the lavas that restlessly roll
+Their sulphurous currents down Yaanek
+In the ultimate climes of the pole—
+That groan as they roll down Mount Yaanek
+In the realms of the boreal pole.
+
+Our talk had been serious and sober,
+But our thoughts they were palsied and sere—
+Our memories were treacherous and sere—
+For we knew not the month was October,
+And we marked not the night of the year—
+(Ah, night of all nights in the year!)
+We noted not the dim lake of Auber—
+(Though once we had journeyed down here),
+Remembered not the dank tarn of Auber,
+Nor the ghoul—haunted woodland of Weir.
+
+And now, as the night was senescent,
+And star—dials pointed to morn—
+As the star—dials hinted of morn—
+At the end of our path a liquescent
+And nebulous lustre was born,
+Out of which a miraculous crescent
+Arose with a duplicate horn—
+Astarte&#39;s bediamonded crescent
+Distinct with its duplicate horn.
+
+And I said—&quot;She is warmer than Dian:
+She rolls through an ether of sighs—
+She revels in a region of sighs:
+She has seen that the tears are not dry on
+These cheeks, where the worm never dies,
+And has come past the stars of the Lion,
+To point us the path to the skies—
+To the Lethean peace of the skies—
+Come up, in despite of the Lion,
+To shine on us with her bright eyes—
+Come up through the lair of the Lion,
+With love in her luminous eyes.&quot;
+
+But Psyche, uplifting her finger,
+Said—&quot;Sadly this star I mistrust—
+Her pallor I strangely mistrust:—
+Oh, hasten!—oh, let us not linger!
+Oh, fly!—let us fly!—for we must.&quot;
+In terror she spoke, letting sink her
+Wings until they trailed in the dust—
+In agony sobbed, letting sink her
+Plumes till they trailed in the dust—
+Till they sorrowfully trailed in the dust.
+
+I replied—&quot;This is nothing but dreaming:
+Let us on by this tremulous light!
+Let us bathe in this crystalline light!
+Its Sybilic splendor is beaming
+With Hope and in Beauty to—night:—
+See!—it flickers up the sky through the night!
+Ah, we safely may trust to its gleaming,
+And be sure it will lead us aright—
+We safely may trust to a gleaming
+That cannot but guide us aright,
+Since it flickers up to Heaven through the night.&quot;
+
+Thus I pacified Psyche and kissed her,
+And tempted her out of her gloom—
+And conquered her scruples and gloom;
+And we passed to the end of the vista,
+But were stopped by the door of a tomb—
+By the door of a legended tomb;
+And I said—&quot;What is written, sweet sister,
+On the door of this legended tomb?&quot;
+She replied—&quot;Ulalume—Ulalume—
+&#39;Tis the vault of thy lost Ulalume!&quot;
+
+Then my heart it grew ashen and sober
+As the leaves that were crisped and sere—
+As the leaves that were withering and sere—
+And I cried—&quot;It was surely October
+On this very night of last year
+That I journeyed—I journeyed down here—
+That I brought a dread burden down here—
+On this night of all nights in the year,
+Ah, what demon has tempted me here?
+Well I know, now, this dim lake of Auber—
+This misty mid region of Weir—
+Well I know, now, this dank tarn of Auber,
+This ghoul—haunted woodland of Weir.&quot;
+&lt;/div&gt;
+
+Edgar Allen Poe - Ulalume
+
+[[Return|previous()]]</tw-passagedata><tw-passagedata pid="5" name="Begin" tags="start" position="600,100" size="100,100">/* https://etc.usf.edu/lit2go/147/the-works-of-edgar-allan-poe/5260/ulalume/ */\
 &lt;div class=&quot;poem&quot;&gt;
 The skies they were ashen and sober;
 The leaves they were crisped and sere—
@@ -1310,9 +1427,8 @@ It was hard by the dim lake of Auber,
 In the misty mid region of Weir—
 It was down by the dank tarn of Auber,
 In the ghoul—haunted woodland of [[Weir]]...
-&lt;/div&gt;
-
-//from Edgar Allen Poe - Ulalume//</tw-passagedata><tw-passagedata pid="5" name="Weir" tags="grave" position="600,100" size="100,100">&lt;div class=&quot;poem&quot;&gt;
+&lt;/div&gt;\
+from [[Edgar Allen Poe - Ulalume|Poem]]</tw-passagedata><tw-passagedata pid="6" name="Weir" tags="grave" position="725,100" size="100,100">&lt;div class=&quot;poem&quot;&gt;
 ...And we passed to the end of the vista,
 But were stopped by the door of a tomb—
 By the door of a legended tomb;
@@ -1320,19 +1436,18 @@ And I said—&quot;What is written, sweet sister,
 On the door of this legended tomb?&quot;
 She replied—&quot;Ulalume—Ulalume—
 &#39;Tis the vault of thy lost Ulalume!&quot;
-&lt;/div&gt;
-
-//from Edgar Allen Poe - Ulalume//
+&lt;/div&gt;\
+from [[Edgar Allen Poe - Ulalume|Poem]]
 
 Your intended lies cold in the foul depths below.  
 Beware, the lords of the dead prefer to keep their treasures entombed. 
 Click [[here|ProcGen]] to begin...
 
-/* Now the procgen begins */</tw-passagedata><tw-passagedata pid="6" name="Interact" tags="" position="725,100" size="100,100">Hey it me, &lt;&lt;= $enemy.name&gt;&gt;, &lt;&lt;= setup.getCharInfo($enemy)&gt;&gt;! 
+/* Now the procgen begins */</tw-passagedata><tw-passagedata pid="7" name="Interact" tags="" position="850,100" size="100,100">Hey it me, &lt;&lt;= $enemy.name&gt;&gt;, &lt;&lt;= setup.getCharInfo($enemy)&gt;&gt;! 
 
 My HP is $enemy.hp!  What should we do about that?
 
-[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="7" name="ProcGen" tags="" position="850,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
+[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="8" name="ProcGen" tags="proc" position="975,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 
 &lt;section class=&quot;map_content&quot;&gt;\

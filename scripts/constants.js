@@ -76,3 +76,4 @@ Object.freeze(ROOM_TYPES);
 setup.MAP_WIDTH   = 30;
 setup.MAP_HEIGHT  = 15;
 setup.NUM_ENEMIES = 4;
+setup.NUM_FLOORS  = 7;
