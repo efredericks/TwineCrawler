@@ -30,7 +30,26 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
 }
+
+/* page backgrounds */
+body[data-tags~=start] {
+  background-image: url("assets/backgrounds/echo-grid-N9VsHXwWB-8-unsplash-pixelated.png");
+}
+body[data-tags~=grave] {
+  background-image: url("assets/backgrounds/wendy-scofield-AQkvtzM6eqU-unsplash-pixelated.png");
+}
+
+
+
+
+
+
+
 ol, ul {
     list-style: none;
 }
@@ -523,4 +542,8 @@ c/o: https://qjzhvmqlzvoo5lqnrvuhmg-on.drv.tw/UInv/Sample_Code.html#Drunk%20Text
 
 .map table {
   transition: none;
+}
+
+.poem {
+  font-style: italic;
 }

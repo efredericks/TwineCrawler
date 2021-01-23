@@ -54,15 +54,50 @@ TwineCrawler
 */
 
 
-:: Begin 
+:: Begin [start]
 
-Welcome to TwineCrawler!  Let's story it up a bit.
+/* https://etc.usf.edu/lit2go/147/the-works-of-edgar-allan-poe/5260/ulalume/ */\
+<div class="poem">
+The skies they were ashen and sober;
+The leaves they were crisped and sere—
+The leaves they were withering and sere;
+It was night in the lonesome October
+Of my most immemorial year;
+It was hard by the dim lake of Auber,
+In the misty mid region of Weir—
+It was down by the dank tarn of Auber,
+In the ghoul—haunted woodland of [[Weir]]...
+</div>
 
+//from Edgar Allen Poe - Ulalume//
+
+:: Weir [grave]
+
+<div class="poem">
+...And we passed to the end of the vista,
+But were stopped by the door of a tomb—
+By the door of a legended tomb;
+And I said—"What is written, sweet sister,
+On the door of this legended tomb?"
+She replied—"Ulalume—Ulalume—
+'Tis the vault of thy lost Ulalume!"
+</div>
+
+//from Edgar Allen Poe - Ulalume//
+
+Your intended lies cold in the foul depths below.  
+Beware, the lords of the dead prefer to keep their treasures entombed. 
 Click [[here|ProcGen]] to begin...
+
+/* Now the procgen begins */
 
 :: Interact
 
-Hey it me, <<= $enemy.name>>!
+Hey it me, <<= $enemy.name>>, <<= setup.getCharInfo($enemy)>>! 
+
+My HP is $enemy.hp!  What should we do about that?
+
+[[Go Back! | ProcGen]]
 
 :: ProcGen
 <<when setup.loadModules>>\
