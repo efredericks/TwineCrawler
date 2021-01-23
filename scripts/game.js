@@ -9,13 +9,14 @@
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
   constructor(name, row, col, race, char_mod, hp) {
-    this.name     = name;
-    this.row      = row;
-    this.col      = col;
-    this.race     = race;
-    this.char_mod = char_mod;
-    this.hp       = hp;
-    this.char_size   = randomListItem(charAdjectives);
+    this.name      = name;
+    this.row       = row;
+    this.col       = col;
+    this.race      = race;
+    this.char_mod  = char_mod;
+    this.hp        = hp;
+    this.char_size = randomListItem(charAdjectives);
+    this.inventory = {};
     //this.description = this.genDescription();
   }
   /*
@@ -52,6 +53,15 @@ class GameMap {
 	  }
   }
 }
+class Item {
+  constructor(name, row, col, is_unique = false) {
+    this.name      = name;
+    this.is_unique = is_unique;
+    this.room_loc  = [row, col];
+  }
+}
+var uniqueItems = new Array(); // list of globally-unique items and where they're located
+
 // Class that outlines a room
 class Room {
 	constructor (title, description, noise_value) {
@@ -64,6 +74,7 @@ class Room {
 		this.connectors  = new Array();
 		this.discovered  = false;
     this.blocked     = false;//true;
+    this.items       = new Array();
 		
 		// Generate room type from Simplex noise 
 		if (noise_value < 0) {
@@ -399,7 +410,7 @@ setup.loadModules.then(function() {
 
       if (_check == "wait") { // don't move but refresh
         setup.tickGame();
-        Engine.play("Begin");
+        Engine.play("ProcGen");
       } else if (_check != null) { // check if move exists
         let _exists = false;
 
@@ -411,7 +422,7 @@ setup.loadModules.then(function() {
             setup.player.col = _check[1];
 
             setup.tickGame();
-            Engine.play("Begin");
+            Engine.play("ProcGen");
             break;
           }
         }

@@ -55,6 +55,16 @@ TwineCrawler
 
 
 :: Begin 
+
+Welcome to TwineCrawler!  Let's story it up a bit.
+
+Click [[here|ProcGen]] to begin...
+
+:: Interact
+
+Hey it me, <<= $enemy.name>>!
+
+:: ProcGen
 <<when setup.loadModules>>\
 Welcome to TwineCrawler <<= setup.player.name>>!\
 
@@ -65,7 +75,11 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 <section class="map_objects">\
   <<set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) >>\
   <<for _i to 0; _i lt _objs.length; _i++>>\
-    <p>You see <b><<= _objs[_i].name>></b>, <<= setup.getCharInfo(_objs[_i])>> in this room.</p>
+    <<capture _i, _objs>>\
+      <<set $enemy to _objs[_i]>>\
+      <p>You see \
+      <<link [[_objs[_i].name|Interact]]>><</link>>, <<= setup.getCharInfo(_objs[_i])>> in this room.</p>
+    <</capture>>
   <</for>>\
 </section>\
 </section>\
@@ -83,7 +97,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
     <</link>>\*/\
   <<if setup.player.row > 0 and setup.player.col > 0>>\
     <span>\
-      <<link [[Up Left|Begin]]>>\
+      <<link [[Up Left|ProcGen]]>>\
         <<set setup.player.row = setup.player.row - 1>>\
         <<set setup.player.col = setup.player.col - 1>>\
         <<= setup.tickGame()>>\\
@@ -94,7 +108,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
   <</if>>\
   <<if setup.player.row > 0>>\
     <span>\
-      <<link [[Up|Begin]]>>\
+      <<link [[Up|ProcGen]]>>\
         <<set setup.player.row = setup.player.row - 1>>\
         <<= setup.tickGame()>>\\
       <</link>>\
@@ -104,7 +118,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
   <</if>>\
   <<if setup.player.col < (setup.MAP_WIDTH-1) and setup.player.row > 0>>\
     <span>\
-      <<link [[Up Right|Begin]]>>\
+      <<link [[Up Right|ProcGen]]>>\
         <<set setup.player.row = setup.player.row - 1>>\
         <<set setup.player.col = setup.player.col + 1>>\
         <<= setup.tickGame()>>\\
@@ -116,7 +130,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 
   <<if setup.player.col > 0>>\
     <span>\
-      <<link [[Left|Begin]]>>\
+      <<link [[Left|ProcGen]]>>\
         <<set setup.player.col = setup.player.col - 1>>\
         <<= setup.tickGame()>>\\
       <</link>>\
@@ -125,13 +139,13 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
     <span>Left</span>\
   <</if>>\
   <span>\
-    <<link [[Stay|Begin]]>>\
+    <<link [[Stay|ProcGen]]>>\
       <<= setup.tickGame()>>\\
     <</link>>\
   </span>\
   <<if setup.player.col < (setup.MAP_WIDTH-1)>>\
     <span>\
-      <<link [[Right|Begin]]>>\
+      <<link [[Right|ProcGen]]>>\
         <<set setup.player.col = setup.player.col + 1>>\
         <<= setup.tickGame()>>\\
       <</link>>\
@@ -142,7 +156,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 
   <<if setup.player.row < (setup.MAP_HEIGHT-1) and setup.player.col > 0>>\
     <span>\
-      <<link [[Down Left|Begin]]>>\
+      <<link [[Down Left|ProcGen]]>>\
         <<set setup.player.row = setup.player.row + 1>>\
         <<set setup.player.col = setup.player.col - 1>>\
         <<= setup.tickGame()>>\\
@@ -153,7 +167,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
   <</if>>\
   <<if setup.player.row < (setup.MAP_HEIGHT-1)>>\
     <span>\
-      <<link [[Down|Begin]]>>\
+      <<link [[Down|ProcGen]]>>\
         <<set setup.player.row = setup.player.row + 1>>\
         <<= setup.tickGame()>>\\
       <</link>>\
@@ -163,7 +177,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
   <</if>>\
   <<if setup.player.row < (setup.MAP_HEIGHT-1) and setup.player.col < (setup.MAP_WIDTH-1)>>\
     <span>\
-      <<link [[Down Right|Begin]]>>\
+      <<link [[Down Right|ProcGen]]>>\
         <<set setup.player.row = setup.player.row + 1>>\
         <<set setup.player.col = setup.player.col + 1>>\
         <<= setup.tickGame()>>\\

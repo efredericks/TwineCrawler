@@ -720,13 +720,14 @@ setup.NUM_ENEMIES = 4;
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
   constructor(name, row, col, race, char_mod, hp) {
-    this.name     = name;
-    this.row      = row;
-    this.col      = col;
-    this.race     = race;
-    this.char_mod = char_mod;
-    this.hp       = hp;
-    this.char_size   = randomListItem(charAdjectives);
+    this.name      = name;
+    this.row       = row;
+    this.col       = col;
+    this.race      = race;
+    this.char_mod  = char_mod;
+    this.hp        = hp;
+    this.char_size = randomListItem(charAdjectives);
+    this.inventory = {};
     //this.description = this.genDescription();
   }
   /*
@@ -763,6 +764,15 @@ class GameMap {
 	  }
   }
 }
+class Item {
+  constructor(name, row, col, is_unique = false) {
+    this.name      = name;
+    this.is_unique = is_unique;
+    this.room_loc  = [row, col];
+  }
+}
+var uniqueItems = new Array(); // list of globally-unique items and where they're located
+
 // Class that outlines a room
 class Room {
 	constructor (title, description, noise_value) {
@@ -775,6 +785,7 @@ class Room {
 		this.connectors  = new Array();
 		this.discovered  = false;
     this.blocked     = false;//true;
+    this.items       = new Array();
 		
 		// Generate room type from Simplex noise 
 		if (noise_value < 0) {
@@ -1110,7 +1121,7 @@ setup.loadModules.then(function() {
 
       if (_check == "wait") { // don't move but refresh
         setup.tickGame();
-        Engine.play("Begin");
+        Engine.play("ProcGen");
       } else if (_check != null) { // check if move exists
         let _exists = false;
 
@@ -1122,7 +1133,7 @@ setup.loadModules.then(function() {
             setup.player.col = _check[1];
 
             setup.tickGame();
-            Engine.play("Begin");
+            Engine.play("ProcGen");
             break;
           }
         }
@@ -1265,7 +1276,9 @@ class Room {
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;run setup.tickGame(setup.map, $player, setup.friends)&gt;&gt;
 &lt;/div&gt;
-*/</tw-passagedata><tw-passagedata pid="4" name="Begin" tags="" position="475,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
+*/</tw-passagedata><tw-passagedata pid="4" name="Begin" tags="" position="475,100" size="100,100">Welcome to TwineCrawler!  Let&#39;s story it up a bit.
+
+Click [[here|ProcGen]] to begin...</tw-passagedata><tw-passagedata pid="5" name="Interact" tags="" position="600,100" size="100,100">Hey it me, &lt;&lt;= $enemy.name&gt;&gt;!</tw-passagedata><tw-passagedata pid="6" name="ProcGen" tags="" position="725,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 
 &lt;section class=&quot;map_content&quot;&gt;\
@@ -1275,7 +1288,11 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 &lt;section class=&quot;map_objects&quot;&gt;\
   &lt;&lt;set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) &gt;&gt;\
   &lt;&lt;for _i to 0; _i lt _objs.length; _i++&gt;&gt;\
-    &lt;p&gt;You see &lt;b&gt;&lt;&lt;= _objs[_i].name&gt;&gt;&lt;/b&gt;, &lt;&lt;= setup.getCharInfo(_objs[_i])&gt;&gt; in this room.&lt;/p&gt;
+    &lt;&lt;capture _i, _objs&gt;&gt;\
+      &lt;&lt;set $enemy to _objs[_i]&gt;&gt;\
+      &lt;p&gt;You see \
+      &lt;&lt;link [[_objs[_i].name|Interact]]&gt;&gt;&lt;&lt;/link&gt;&gt;, &lt;&lt;= setup.getCharInfo(_objs[_i])&gt;&gt; in this room.&lt;/p&gt;
+    &lt;&lt;/capture&gt;&gt;
   &lt;&lt;/for&gt;&gt;\
 &lt;/section&gt;\
 &lt;/section&gt;\
@@ -1293,7 +1310,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
     &lt;&lt;/link&gt;&gt;\*/\
   &lt;&lt;if setup.player.row &gt; 0 and setup.player.col &gt; 0&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Up Left|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Up Left|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.row = setup.player.row - 1&gt;&gt;\
         &lt;&lt;set setup.player.col = setup.player.col - 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
@@ -1304,7 +1321,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
   &lt;&lt;/if&gt;&gt;\
   &lt;&lt;if setup.player.row &gt; 0&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Up|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Up|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.row = setup.player.row - 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
       &lt;&lt;/link&gt;&gt;\
@@ -1314,7 +1331,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
   &lt;&lt;/if&gt;&gt;\
   &lt;&lt;if setup.player.col &lt; (setup.MAP_WIDTH-1) and setup.player.row &gt; 0&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Up Right|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Up Right|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.row = setup.player.row - 1&gt;&gt;\
         &lt;&lt;set setup.player.col = setup.player.col + 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
@@ -1326,7 +1343,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 
   &lt;&lt;if setup.player.col &gt; 0&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Left|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Left|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.col = setup.player.col - 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
       &lt;&lt;/link&gt;&gt;\
@@ -1335,13 +1352,13 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
     &lt;span&gt;Left&lt;/span&gt;\
   &lt;&lt;/if&gt;&gt;\
   &lt;span&gt;\
-    &lt;&lt;link [[Stay|Begin]]&gt;&gt;\
+    &lt;&lt;link [[Stay|ProcGen]]&gt;&gt;\
       &lt;&lt;= setup.tickGame()&gt;&gt;\\
     &lt;&lt;/link&gt;&gt;\
   &lt;/span&gt;\
   &lt;&lt;if setup.player.col &lt; (setup.MAP_WIDTH-1)&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Right|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Right|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.col = setup.player.col + 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
       &lt;&lt;/link&gt;&gt;\
@@ -1352,7 +1369,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
 
   &lt;&lt;if setup.player.row &lt; (setup.MAP_HEIGHT-1) and setup.player.col &gt; 0&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Down Left|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Down Left|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.row = setup.player.row + 1&gt;&gt;\
         &lt;&lt;set setup.player.col = setup.player.col - 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
@@ -1363,7 +1380,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
   &lt;&lt;/if&gt;&gt;\
   &lt;&lt;if setup.player.row &lt; (setup.MAP_HEIGHT-1)&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Down|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Down|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.row = setup.player.row + 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
       &lt;&lt;/link&gt;&gt;\
@@ -1373,7 +1390,7 @@ Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!\
   &lt;&lt;/if&gt;&gt;\
   &lt;&lt;if setup.player.row &lt; (setup.MAP_HEIGHT-1) and setup.player.col &lt; (setup.MAP_WIDTH-1)&gt;&gt;\
     &lt;span&gt;\
-      &lt;&lt;link [[Down Right|Begin]]&gt;&gt;\
+      &lt;&lt;link [[Down Right|ProcGen]]&gt;&gt;\
         &lt;&lt;set setup.player.row = setup.player.row + 1&gt;&gt;\
         &lt;&lt;set setup.player.col = setup.player.col + 1&gt;&gt;\
         &lt;&lt;= setup.tickGame()&gt;&gt;\\
