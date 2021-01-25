@@ -79,7 +79,7 @@ class GameMap {
           [1, 2, 2, 2, 7, 2, 1, 1, 6, 1, 1, 1, 1, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 9, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 2, 2, 2, 7, 2, 1, 1, 1, 1, 1, 1, 6, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 2, 2, 2,10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 1, 1, 1, 1,10, 7,10, 1,10, 7,10, 1,10, 7,10, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -198,6 +198,8 @@ setup.getInteractions = function(_map, _player, _friends) {
       _objs.push(_friends[f]);
     }
   }
+//  if (_map.maps[_player.depth][_player.row][_player.col] == ROOM_SPRITES.STAIRS_DOWN)
+ //   _objs.push("GO-DOWN");
   return _objs;
 }
 
@@ -327,7 +329,9 @@ setup.drawMap = function(_map, _player, _friends) {
                 case ROOM_SPRITES.FLOOR_3:
     							_render += "<div class='floor-3 " + _cls + "'></div>";
                   break;
-
+                case ROOM_SPRITES.STAIRS_DOWN:
+    							_render += "<div class='stairs-down " + _cls + "'></div>";
+                  break;
               }
             }
           }

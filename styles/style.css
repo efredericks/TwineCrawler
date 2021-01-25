@@ -454,6 +454,9 @@ section.map {
 .floor-3 {
   background: url('assets/urizen-onebit-basic/colored.png') no-repeat -79px -27px;
 }
+.stairs-down {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -131px -1px;
+}
 
 
 section.nav span {

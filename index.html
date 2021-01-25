@@ -559,6 +559,9 @@ section.map {
 .floor-3 {
   background: url('assets/urizen-onebit-basic/colored.png') no-repeat -79px -27px;
 }
+.stairs-down {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -131px -1px;
+}
 
 
 section.nav span {
@@ -879,7 +882,7 @@ class GameMap {
           [1, 2, 2, 2, 7, 2, 1, 1, 6, 1, 1, 1, 1, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 9, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 2, 2, 2, 7, 2, 1, 1, 1, 1, 1, 1, 6, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 2, 2, 2,10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [1, 1, 1, 1, 1,10, 7,10, 1,10, 7,10, 1,10, 7,10, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -1126,6 +1129,9 @@ setup.drawMap = function(_map, _player, _friends) {
                   break;
                 case ROOM_SPRITES.FLOOR_3:
     							_render += "<div class='floor-3 " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.STAIRS_DOWN:
+    							_render += "<div class='stairs-down " + _cls + "'></div>";
                   break;
 
               }
