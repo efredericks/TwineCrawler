@@ -73,7 +73,22 @@ const ROOM_TYPES = {
 };
 Object.freeze(ROOM_TYPES);
 
+const ROOM_SPRITES = {
+  BLANK: 0,
+  CONCRETE_WALL: 1,
+  BLANK_FLOOR:   2, 
+  FLOOR_1:       3,
+  FLOOR_2:       4,
+  FLOOR_3:       5,
+  DOOR:          6,
+  DOOR_GATE:     7,
+  STAIRS_UP:     8,
+  STAIRS_DOWN:   9,
+  METAL_GATE:    10,
+};
+Object.freeze(ROOM_SPRITES);
+
 setup.MAP_WIDTH   = 30;
-setup.MAP_HEIGHT  = 15;
+setup.MAP_HEIGHT  = 17;
 setup.NUM_ENEMIES = 4;
 setup.NUM_FLOORS  = 9;

@@ -68,17 +68,49 @@ class GameMap {
     this.maps_names = new Array(num_depths);
 
     for (let i = 0; i < num_depths; i++) {
-      // Generate map 
-      let simplex = new SimplexNoise();
-    	let _map = new Array(height);
-      for (var row = 0; row < height; row++) {
-  	    let t_row = new Array(width);
-        for (var col = 0; col < width; col++) {
-          t_row[col] = new Room("title " + row + "," + col, "desc", simplex.noise2D(col, row));
+      if (i == 0) { // hand craft level 1
+        let _lvl0 = [
+          [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 1, 1, 1, 1,10, 7,10, 1,10, 7,10, 1,10, 7,10, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2, 7, 2, 1, 1, 6, 1, 1, 1, 1, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2, 7, 2, 1, 1, 1, 1, 1, 1, 6, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 1, 1, 1, 1,10, 7,10, 1,10, 7,10, 1,10, 7,10, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        ];
+
+        let _map = new Array(height);
+        for (var row = 0; row < height; row++) {
+  	      let t_row = new Array(width);
+          for (var col = 0; col < width; col++) {
+            t_row[col] = new Room("title " + row + "," + col, "desc", _lvl0[row][col], true);
+          }
+          _map[row] = t_row;
         }
-        _map[row] = t_row;
+        this.maps[i] = _map;
+      } else {
+        // Generate map 
+        let simplex = new SimplexNoise();
+      	let _map = new Array(height);
+        for (var row = 0; row < height; row++) {
+  	      let t_row = new Array(width);
+          for (var col = 0; col < width; col++) {
+            t_row[col] = new Room("title " + row + "," + col, "desc", simplex.noise2D(col, row));
+          }
+          _map[row] = t_row;
+        }
+        this.maps[i] = _map;
       }
-      this.maps[i] = _map;
     }
 
     this.maps_names[0] = "Limbo";
@@ -103,10 +135,11 @@ var uniqueItems = new Array(); // list of globally-unique items and where they'r
 
 // Class that outlines a room
 class Room {
-	constructor (title, description, noise_value) {
+	constructor (title, description, noise_value, hand_made=false) {
 		this.title       = title;
 		this.description = description;
-		this.noise_value = noise_value;
+    this.noise_value = noise_value;
+    this.hand_made   = hand_made;
 		this.items       = new Array();
 		this.encounters  = new Array();
 		this.prior_room  = -1;
@@ -115,40 +148,46 @@ class Room {
     this.blocked     = false;//true;
     this.items       = new Array();
 		
-		// Generate room type from Simplex noise 
-		if (noise_value < 0) {
-			this.room_type = ROOM_TYPES.NORMAL;
-		 	this.title = "A normal room";
-			this.description = "A normal room description";
-		} else if (noise_value < 0.25) {
-			this.room_type = ROOM_TYPES.OPEN;
-			this.title = "An open room";
-			this.description = "A room with a view!";
-		} else if (noise_value < 0.35) {
-			this.room_type = ROOM_TYPES.TIGHT;
-			this.title = "A tight room";
-			this.description = "There is a very tight squeeze here";
-		} else if (noise_value < 0.55) {
-			this.room_type = ROOM_TYPES.STREAM;
-			this.title = "A streamy room";
-			this.description = "A stream meanders about";
-		} else if (noise_value < 0.65) {
-			this.room_type = ROOM_TYPES.POOL;
-			this.title = "A room with a shimmering pool";
-			this.description = "There is a large, shimmering pool in this room.";
-		} else if (noise_value < 0.75) {
-			this.room_type = ROOM_TYPES.ROCKY;
-			this.title = "A room with rocky ground";
-			this.description = "Lots of rocks abound on this ground.  Watch your step.";
-		} else if (noise_value < 0.95) {
-			this.room_type = ROOM_TYPES.STALAGS;
-			this.title = "A room with stalagtites/mites";
-			this.description = "Many rocky outcroppings seem to be in this room";
-		} else {
-			this.room_type = ROOM_TYPES.VOID;
-			this.title = "A room with a precipice";
-			this.description = "There is a gaping void here.  Don't fall.";
-		}
+    // Generate room type from Simplex noise 
+    if (!hand_made) {
+		  if (noise_value < 0) {
+			  this.room_type = ROOM_TYPES.NORMAL;
+  		 	this.title = "A normal room";
+	  		this.description = "A normal room description";
+  		} else if (noise_value < 0.25) {
+	  		this.room_type = ROOM_TYPES.OPEN;
+		  	this.title = "An open room";
+  			this.description = "A room with a view!";
+	  	} else if (noise_value < 0.35) {
+		  	this.room_type = ROOM_TYPES.TIGHT;
+  			this.title = "A tight room";
+	  		this.description = "There is a very tight squeeze here";
+		  } else if (noise_value < 0.55) {
+  			this.room_type = ROOM_TYPES.STREAM;
+	  		this.title = "A streamy room";
+		  	this.description = "A stream meanders about";
+  		} else if (noise_value < 0.65) {
+	  		this.room_type = ROOM_TYPES.POOL;
+		  	this.title = "A room with a shimmering pool";
+  			this.description = "There is a large, shimmering pool in this room.";
+	  	} else if (noise_value < 0.75) {
+		  	this.room_type = ROOM_TYPES.ROCKY;
+  			this.title = "A room with rocky ground";
+	  		this.description = "Lots of rocks abound on this ground.  Watch your step.";
+		  } else if (noise_value < 0.95) {
+  			this.room_type = ROOM_TYPES.STALAGS;
+	  		this.title = "A room with stalagtites/mites";
+		  	this.description = "Many rocky outcroppings seem to be in this room";
+  		} else {
+	  		this.room_type = ROOM_TYPES.VOID;
+		  	this.title = "A room with a precipice";
+			  this.description = "There is a gaping void here.  Don't fall.";
+      }
+    } else { // hand-made room
+ 		  this.room_type = noise_value;
+		  this.title = "TBD";
+			this.description = "TBD";
+    }
 	}	
 }
 
@@ -214,39 +253,82 @@ setup.drawMap = function(_map, _player, _friends) {
             if (_map.maps[_player.depth][_row][_col].discovered)
               _cls = "quarter";
 
-		  			switch (_map.maps[_player.depth][_row][_col].room_type) {
-	  					case ROOM_TYPES.STALAGS:
-  							_render += "<div id='stalags' class='" + _cls + "'></div>";
-  							//_render += "<div class='stalags " + _cls + "'>△</div>";
-						  	break;
-					  	case ROOM_TYPES.OPEN:
-				  			_render += "<div id='open' class='" + _cls + "'></div>";
-				  			//_render += "<div class='open " + _cls + "'>_</div>";
-			  				break;
-		  				case ROOM_TYPES.TIGHT:
-	  						//_render += "<div class='tight " + _cls + "'>⁜</div>";
-	  						_render += "<div id='tight' class='" + _cls + "'></div>";
-  							break;
-						  case ROOM_TYPES.STREAM:
-					  		//_render += "<div class='stream'>~</div>";
-				        _render += "<div id='stream' class='" + _cls + "'></div>";
-			  				break;
-		  				case ROOM_TYPES.POOL:
-	  						_render += "<div id='pool' class='" + _cls + "'></div>";
-	  						//_render += "<div class='pool " + _cls + "'>⊜</div>";
-  							break;
-				  		case ROOM_TYPES.VOID:
-			  				//_render += "<div class='void " + _cls + "'>ↈ</div>";
-			  				_render += "<div id='void' class='" + _cls + "'></div>";
-		  					break;
-	  					case ROOM_TYPES.ROCKY:
-  							_render += "<div id='rocky' class='" + _cls + "'></div>";
-  							//_render += "<div class='rocky " + _cls + "'>⋙</div>";
-				  			break;
-			  			case ROOM_TYPES.NORMAL:
-		  				default:
-  							_render += "<div class='normal " + _cls + "'></div>";
-  							break;
+            if (!_map.maps[_player.depth][_row][_col].hand_made) {
+		  	  		switch (_map.maps[_player.depth][_row][_col].room_type) {
+	  	  				case ROOM_TYPES.STALAGS:
+  	  						_render += "<div id='stalags' class='" + _cls + "'></div>";
+    							//_render += "<div class='stalags " + _cls + "'>△</div>";
+	  					  	break;
+  					  	case ROOM_TYPES.OPEN:
+				  		  	_render += "<div id='open' class='" + _cls + "'></div>";
+				  	  		//_render += "<div class='open " + _cls + "'>_</div>";
+			  	  			break;
+		  	  			case ROOM_TYPES.TIGHT:
+	  	  					//_render += "<div class='tight " + _cls + "'>⁜</div>";
+	    						_render += "<div id='tight' class='" + _cls + "'></div>";
+    							break;
+	  					  case ROOM_TYPES.STREAM:
+  					  		//_render += "<div class='stream'>~</div>";
+				          _render += "<div id='stream' class='" + _cls + "'></div>";
+			  	  			break;
+		  	  			case ROOM_TYPES.POOL:
+	  	  					_render += "<div id='pool' class='" + _cls + "'></div>";
+	    						//_render += "<div class='pool " + _cls + "'>⊜</div>";
+    							break;
+	  			  		case ROOM_TYPES.VOID:
+  			  				//_render += "<div class='void " + _cls + "'>ↈ</div>";
+			  		  		_render += "<div id='void' class='" + _cls + "'></div>";
+		  		  			break;
+	  		  			case ROOM_TYPES.ROCKY:
+  		  					_render += "<div id='concrete-wall' class='" + _cls + "'></div>";
+  	  						//_render += "<div class='rocky " + _cls + "'>⋙</div>";
+		  		  			break;
+	  		  			case ROOM_TYPES.NORMAL:
+  		  				default:
+    							_render += "<div class='normal " + _cls + "'></div>";
+    							break;
+              }
+            } else {
+		  	  		switch (_map.maps[_player.depth][_row][_col].room_type) {
+                case ROOM_SPRITES.BLANK:
+                default:
+    							_render += "<div class='normal " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.BLANK_FLOOR:
+                  // for now, randomize floor placement with preference to blank
+                  let _r = Math.random();
+                  if (_r > 0.6)
+                    _render += "<div class='blank-floor " + _cls + "'></div>";
+                  else if (_r > 0.4)
+                    _render += "<div class='floor-1 " + _cls + "'></div>";
+                  else if (_r > 0.2)
+                    _render += "<div class='floor-2 " + _cls + "'></div>";
+                  else
+                    _render += "<div class='floor-3 " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.CONCRETE_WALL:
+    							_render += "<div class='concrete-wall " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.METAL_GATE:
+    							_render += "<div class='metal-gate " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.DOOR:
+    							_render += "<div class='door " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.DOOR_GATE:
+    							_render += "<div class='door-gate " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.FLOOR_1:
+    							_render += "<div class='floor-1 " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.FLOOR_2:
+    							_render += "<div class='floor-2 " + _cls + "'></div>";
+                  break;
+                case ROOM_SPRITES.FLOOR_3:
+    							_render += "<div class='floor-3 " + _cls + "'></div>";
+                  break;
+
+              }
             }
           }
 					 //_render += "";

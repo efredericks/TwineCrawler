@@ -426,6 +426,34 @@ section.map {
   /*background: url('assets/Roguelike-Pack/Spritesheet/roguelikeSheet_transparent.png') no-repeat -918px -340px;*/
 }
 
+/* new sprites */
+.normal {
+  background: #000;
+}
+.concrete-wall {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -1px -40px;
+}
+.metal-gate {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -209px -40px;
+}
+.door {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -66px -14px;
+}
+.door-gate {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -157px -14px;
+}
+.blank-floor {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -40px -27px;
+}
+.floor-1 {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -53px -27px;
+}
+.floor-2 {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -66px -27px;
+}
+.floor-3 {
+  background: url('assets/urizen-onebit-basic/colored.png') no-repeat -79px -27px;
+}
 
 
 section.nav span {
@@ -467,13 +495,13 @@ td {
 .map_wrapper {
   display: grid;
   grid-template-columns: repeat(30, 1fr);
-  grid-auto-rows: minmax(16px, auto);
-  width:480px;
+  grid-auto-rows: minmax(12px, auto);
+  width:360px;/*480px;*/
 }
 .map_wrapper div {
-  background: #333;
-  width: 16px;
-  height: 16px;
+  /*background: #333;*/
+  width: 12px;
+  height: 12px;
 }
 
 .half {opacity: 0.25; background-color: #333;}
