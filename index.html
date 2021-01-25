@@ -654,6 +654,15 @@ c/o: https://qjzhvmqlzvoo5lqnrvuhmg-on.drv.tw/UInv/Sample_Code.html#Drunk%20Text
 
 .poem {
   font-style: italic;
+  background-color: rgba(24, 24, 24, 0.5);
+  padding: 0px 10px;
+  border-radius: 25px;
+  border: 2px solid #333;
+  margin: 25px;
+}
+
+.poem div {
+  padding-right: 10px;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "Story JavaScript" */
 /*
 Images:
@@ -930,11 +939,11 @@ setup.drawMap = function(_map, _player, _friends) {
       let _col_diff = Math.abs(_player.col - _col);
       let _max_diff = Math.max(_row_diff, _col_diff);
       let _cls = "full";
-      if (_max_diff == 3)
-        _cls = "half";
-      else if (_max_diff == 2)
-        _cls = "quarter";
-      else if (_max_diff == 1)
+//      if (_max_diff == 3)
+//        _cls = "half";
+//      else if (_max_diff == 2)
+//        _cls = "quarter";
+//      else if (_max_diff == 1)
         _cls = "";
 
 			//_render += `<td style="background-color: ${(_map.map[_row][_col].blocked ? "#666": "#444")};">`;
@@ -1491,8 +1500,10 @@ It was hard by the dim lake of Auber,
 In the misty mid region of Weir—
 It was down by the dank tarn of Auber,
 In the ghoul—haunted woodland of [[Weir]]...
+&lt;div align=&quot;right&quot;&gt;\
+  from [[Edgar Allen Poe - Ulalume|Poem]]\
 &lt;/div&gt;\
-from [[Edgar Allen Poe - Ulalume|Poem]]</tw-passagedata><tw-passagedata pid="6" name="Weir" tags="grave" position="725,100" size="100,100">\
+&lt;/div&gt;\</tw-passagedata><tw-passagedata pid="6" name="Weir" tags="grave" position="725,100" size="100,100">\
 &lt;div class=&quot;poem&quot;&gt;\
 ...And we passed to the end of the vista,
 But were stopped by the door of a tomb—
@@ -1501,12 +1512,19 @@ And I said—&quot;What is written, sweet sister,
 On the door of this legended tomb?&quot;
 She replied—&quot;Ulalume—Ulalume—
 &#39;Tis the vault of thy lost Ulalume!&quot;
+&lt;div align=&quot;right&quot;&gt;\
+  from [[Edgar Allen Poe - Ulalume|Poem]]\
 &lt;/div&gt;\
-from [[Edgar Allen Poe - Ulalume|Poem]]
-
+&lt;/div&gt;\
+\
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _starts to [&quot;With strength you faintly realized you had, you [[rip the gate off its hinges|ProcGen]]&quot;, &quot;You meekly [[grasp the gate and sidle beyond|ProcGen]]&quot;, &quot;Your hands tighten on the bars and you [[vault over the rust-flecked points of the gate|ProcGen]]&quot;]&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;\
+\
 Your intended lies cold in the foul depths below.  
 Beware, the lords of the dead prefer to keep their treasures entombed. 
-Click [[here|ProcGen]] to begin...
+
+You gather your courage and place your hands on a rusted iron gate guarding the mausoleum.  &lt;&lt;= either(_starts)&gt;&gt;.
 
 /* Now the procgen begins */</tw-passagedata><tw-passagedata pid="7" name="Interact" tags="" position="850,100" size="100,100">Hey it me, &lt;&lt;= $enemy.name&gt;&gt;, &lt;&lt;= setup.getCharInfo($enemy)&gt;&gt;! 
 
@@ -1514,7 +1532,7 @@ My HP is $enemy.hp!  What should we do about that?
 
 [[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="8" name="ProcGen" tags="proc" position="975,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!
-You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (&lt;&lt;= setup.player.depth+1&gt;&gt;)!
+You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt;&lt;= setup.player.depth+1&gt;&gt;)!
 
 &lt;section class=&quot;map_content&quot;&gt;\
 &lt;h2&gt;&lt;&lt;= setup.map.maps[setup.player.depth][setup.player.row][setup.player.col].title&gt;&gt;&lt;/h2&gt;\

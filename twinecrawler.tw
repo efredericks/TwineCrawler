@@ -187,8 +187,10 @@ It was hard by the dim lake of Auber,
 In the misty mid region of Weir—
 It was down by the dank tarn of Auber,
 In the ghoul—haunted woodland of [[Weir]]...
+<div align="right">\
+  from [[Edgar Allen Poe - Ulalume|Poem]]\
 </div>\
-from [[Edgar Allen Poe - Ulalume|Poem]]
+</div>\
 
 :: Weir [grave]
 \
@@ -200,12 +202,19 @@ And I said—"What is written, sweet sister,
 On the door of this legended tomb?"
 She replied—"Ulalume—Ulalume—
 'Tis the vault of thy lost Ulalume!"
+<div align="right">\
+  from [[Edgar Allen Poe - Ulalume|Poem]]\
 </div>\
-from [[Edgar Allen Poe - Ulalume|Poem]]
-
+</div>\
+\
+<<nobr>>
+<<set _starts to ["With strength you faintly realized you had, you [[rip the gate off its hinges|ProcGen]]", "You meekly [[grasp the gate and sidle beyond|ProcGen]]", "Your hands tighten on the bars and you [[vault over the rust-flecked points of the gate|ProcGen]]"]>>
+<</nobr>>\
+\
 Your intended lies cold in the foul depths below.  
 Beware, the lords of the dead prefer to keep their treasures entombed. 
-Click [[here|ProcGen]] to begin...
+
+You gather your courage and place your hands on a rusted iron gate guarding the mausoleum.  <<= either(_starts)>>.
 
 /* Now the procgen begins */
 

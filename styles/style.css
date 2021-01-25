@@ -549,4 +549,13 @@ c/o: https://qjzhvmqlzvoo5lqnrvuhmg-on.drv.tw/UInv/Sample_Code.html#Drunk%20Text
 
 .poem {
   font-style: italic;
+  background-color: rgba(24, 24, 24, 0.5);
+  padding: 0px 10px;
+  border-radius: 25px;
+  border: 2px solid #333;
+  margin: 25px;
+}
+
+.poem div {
+  padding-right: 10px;
 }

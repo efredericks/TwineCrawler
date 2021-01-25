@@ -182,11 +182,11 @@ setup.drawMap = function(_map, _player, _friends) {
       let _col_diff = Math.abs(_player.col - _col);
       let _max_diff = Math.max(_row_diff, _col_diff);
       let _cls = "full";
-      if (_max_diff == 3)
-        _cls = "half";
-      else if (_max_diff == 2)
-        _cls = "quarter";
-      else if (_max_diff == 1)
+//      if (_max_diff == 3)
+//        _cls = "half";
+//      else if (_max_diff == 2)
+//        _cls = "quarter";
+//      else if (_max_diff == 1)
         _cls = "";
 
 			//_render += `<td style="background-color: ${(_map.map[_row][_col].blocked ? "#666": "#444")};">`;
