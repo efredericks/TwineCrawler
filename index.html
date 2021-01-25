@@ -872,10 +872,49 @@ class GameMap {
   constructor(width, height, num_depths) {
     this.maps = new Array(num_depths); 
     this.maps_names = new Array(num_depths);
+    this.maps_interactions = new Array(num_depths);
 
     for (let i = 0; i < num_depths; i++) {
       if (i == 0) { // hand craft level 1
         let _lvl0 = [
+          [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 1, 1, 1, 1,10, 7,10, 1,10, 7,10, 1,10, 7,10, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2, 7, 2, 1, 1, 6, 1, 1, 1, 1, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 1, 2, 2, 2, 1, 2, 2, 9, 1, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2, 7, 2, 1, 1, 1, 1, 1, 1, 6, 1, 1, 2, 7, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 2, 2, 2,10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,10, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [1, 1, 1, 1, 1,10, 7,10, 1,10, 7,10, 1,10, 7,10, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+          [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        ];
+
+        // iterate over this later to ensure it is walkable/interactable
+        let _lvl0_interactions = [];
+        for (let _i = 0; _i < _lvl0.length; _i++) { // row
+          for (let _j = 0; _j < _lvl0[_i].length; _j++) { // col
+            switch (_lvl0[_i][_j]) {
+              case 0: // undiggable wall
+              case 7: // doors
+              case 6:
+              case 1: // concrete wall (diggable)
+                _lvl0_interactions.push((_lvl0[_i][_j],[_i,_j]));
+              break;
+            }
+          }
+        }
+        this.maps_interactions[0] = _lvl0_interactions;
+        console.log(this.maps_interactions);
+
+
+        let _lvl0_flavor = [ // lookup table to twine passages
           [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
           [0, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
@@ -1175,14 +1214,23 @@ setup.checkValidMoves = function(_map, _row, _col) {
 	var up_row    = Math.max(_row-1, 0);
 	var down_row  = Math.min(_row+1, _map.length-1);//setup.HEIGHT-1);
 	var left_col  = Math.max(_col-1, 0);
-	var right_col = Math.min(_col+1, _map[0].length-1);//setup.WIDTH-1);
+  var right_col = Math.min(_col+1, _map[0].length-1);//setup.WIDTH-1);
 
-	// iterate over row and cols to check which path is blocked
+
+  
+  let _invalidMoves = [0,1,7,6,10];
+
+
+  // iterate over row and cols to check which path is blocked
 	for (var _r = up_row; _r <= down_row; _r++) {
 		for (var _c = left_col; _c <= right_col; _c++) {
-			if ((!(_map[_r][_c].blocked)) && ((_r != _row) || (_c != _col)))
-			// try this next time: if (!_map[_r][_c].blocked && !(_r === _row && _c === _col))
+			if ((!(_map[_r][_c].blocked)) && ((_r != _row) || (_c != _col))) {
+
+      // try this next time: if (!_map[_r][_c].blocked && !(_r === _row && _c === _col))
+        
+        if (!_invalidMoves.includes(_map[_r][_c].room_type))
           moves.push([_r, _c]);
+      }
 		}
 	}
 
@@ -1206,6 +1254,10 @@ setup.tickGame = function() {
   // update enemies
   for (let i = 0; i < setup.enemies.length; i++) {
     if (Math.random() > 0.7) { // move
+      let _validMoves = setup.checkValidMoves(setup.map.maps[setup.player.depth], setup.enemies[i].row, setup.enemies[i].col);
+      let _newRow = setup.enemies[i].row;
+      let _newCol = setup.enemies[i].col;
+
       /*
       0 1 2
       3 4 5
@@ -1215,51 +1267,70 @@ setup.tickGame = function() {
       switch (_dir) {
         case 0: // up left
           if ((setup.enemies[i].row > 0) && (setup.enemies[i].col > 0)) {
-            setup.enemies[i].row--;
-            setup.enemies[i].col--;
+            _newRow--;
+            _newCol--;
+            //setup.enemies[i].row--;
+            //setup.enemies[i].col--;
           }
           break;
         case 1: // up
           if (setup.enemies[i].row > 0) {
-            setup.enemies[i].row--;
+            _newRow--;
+            //setup.enemies[i].row--;
           }
           break;
         case 2: // up right
           if ((setup.enemies[i].row > 0) && (setup.enemies[i].col < (setup.MAP_WIDTH-1))) {
-            setup.enemies[i].row--;
-            setup.enemies[i].col++;
+            _newRow--;
+            _newCol++;
+            //setup.enemies[i].row--;
+            //setup.enemies[i].col++;
           }
           break;
         case 3: // left
           if (setup.enemies[i].col > 0) {
-            setup.enemies[i].col--;
+            _newCol--;
+            //setup.enemies[i].col--;
           }
           break;
         case 4: // pass
           break;
         case 5: // right
           if (setup.enemies[i].col < (setup.MAP_WIDTH-1)) {
-            setup.enemies[i].col++;
+            _newCol++;
+            //setup.enemies[i].col++;
           }
           break;
         case 6: // down left
           if ((setup.enemies[i].row < (setup.MAP_HEIGHT-1)) && (setup.enemies[i].col > 0)) {
-            setup.enemies[i].row++;
-            setup.enemies[i].col--;
+            _newRow++;
+            _newCol--;
+            //setup.enemies[i].row++;
+            //setup.enemies[i].col--;
           }
           break;
         case 6: // down 
           if (setup.enemies[i].row < (setup.MAP_HEIGHT-1)) {
-            setup.enemies[i].row++;
+            _newRow++;
+            //setup.enemies[i].row++;
           }
           break;
         case 7: // down right
         default:
           if ((setup.enemies[i].row < (setup.MAP_HEIGHT-1)) && (setup.enemies[i].col < (setup.MAP_WIDTH-1))) {
-            setup.enemies[i].row++;
-            setup.enemies[i].col--;
+            _newRow++;
+            _newCol--;
+            //setup.enemies[i].row++;
+            //setup.enemies[i].col--;
           }
           break;
+      }
+      for (let j = 0; j < _validMoves.length; j++) {
+        if ((_newRow == _validMoves[j][0]) && (_newCol == _validMoves[j][1])) {
+          setup.enemies[i].row = _newRow;
+          setup.enemies[i].col = _newCol;
+          break;
+        }
       }
     }
   }
@@ -1282,6 +1353,15 @@ setup.loadModules = importScripts("js/helpers.js", "js/simplex-noise.js");//, "j
 
 setup.loadModules.then(function() {
   setup.player = new Character("Erik", 0, 0, 0, RACE.HUMAN, RACE.NORMAL, 100);
+  setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
+  setup.map.maps[setup.player.depth][0][0].discovered = true;
+  setup.map.maps[setup.player.depth][0][0].blocked = false;
+  //console.log(setup.map);
+
+  // place enemies and player
+  setup.player.col = 2;
+  setup.player.row = 6;
+
   setup.enemies = new Array();
   for (let i = 0; i < setup.NUM_ENEMIES; i++) {
     let _n = "Enemy " + i;
@@ -1289,12 +1369,14 @@ setup.loadModules.then(function() {
     let _rm = randomEnum(CHAR_MOD);
     let _row = randomInt(1, setup.MAP_HEIGHT-1);
     let _col = randomInt(1, setup.MAP_WIDTH-1);
+
+    let _validSpots = [ROOM_SPRITES.BLANK_FLOOR,ROOM_SPRITES.FLOOR_1,ROOM_SPRITES.FLOOR_2,ROOM_SPRITES.FLOOR_3];
+    while (!_validSpots.includes(setup.map.maps[0][_row][_col].room_type)) {
+      _row = randomInt(1, setup.MAP_HEIGHT-1);
+      _col = randomInt(1, setup.MAP_WIDTH-1);
+    }
     setup.enemies.push(new Character(_n, _row, _col, 0, _r, _rm, 100));
   }
-  setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
-  setup.map.maps[setup.player.depth][0][0].discovered = true;
-  setup.map.maps[setup.player.depth][0][0].blocked = false;
-  //console.log(setup.map);
 
 
   $(function() {
@@ -1308,7 +1390,7 @@ setup.loadModules.then(function() {
       _tick_keys.push(49);
       _tick_keys.push(50);
 
-      let _update_engine_keys = [32];
+      let _update_engine_keys = [32,49,50];
 
 
 
@@ -1322,11 +1404,9 @@ setup.loadModules.then(function() {
         //DEBUG!
         case 49: // 1
           _check = "DEBUG-inc"
-          _tick = true;
           break;
         case 50: // 2
           _check = "DEBUG-dec"
-          _tick = true;
           break;
 
 
