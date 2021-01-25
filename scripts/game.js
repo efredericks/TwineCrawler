@@ -40,6 +40,27 @@ class Character {
     */
 }
 class GameMap {
+  /*
+  Floor types:
+    0 - open
+    1 - simplex
+    2 - cells (long corridor)
+    3 - radial/spiral
+    4 - CA
+  */
+  /* 
+    Layers:
+      https://historylists.org/art/9-circles-of-hell-dantes-inferno.html
+      0 - Limbo - eternity in an inferior form of Heaven
+      1 - Lust - blown violently back and forth by strong winds, preventing them from finding peace and rest.
+      2 - Gluttony - lie in a vile slush that is produced by never-ending icy rain
+      3 - Greed - jousting
+      4 - Anger - furious fighting each other on the surface of the river Styx and the sullen gurgling beneath the surface of the water
+      5 - Heresy - condemned to eternity in flaming tombs
+      6 - Violence - The Seventh Circle of Hell is divided into three rings. The Outer Ring houses murderers and others who were violent to other people and property. Here, Dante sees Alexander the Great (disputed), Dionysius I of Syracuse, Guy de Montfort and many other notable historical and mythological figures such as the Centaurus, sank into a river of boiling blood and fire. In the Middle Ring, the poet sees suicides who have been turned into trees and bushes which are fed upon by harpies. But he also sees here profligates, chased and torn to pieces by dogs. In the Inner Ring are blasphemers and sodomites, residing in a desert of burning sand and burning rain falling from the sky.
+      7 - Fraud - The Eight Circle of Hell is resided by the fraudulent. Dante and Virgil reach it on the back of Geryon, a flying monster with different natures, just like the fraudulent. This circle of Hell is divided into 10 Bolgias or stony ditches with bridges between them. In Bolgia 1, Dante sees panderers and seducer. In Bolgia 2 he finds flatterers. After crossing the bridge to Bolgia 3, he and Virgil see those who are guilty of simony. After crossing another bridge between the ditches to Bolgia 4, they find sorcerers and false prophets. In Bolgia 5 are housed corrupt politicians, in Bolgia 6 are hypocrites and in the remaining 4 ditches, Dante finds hypocrites (Bolgia 7), thieves (Bolgia 7), evil counselors and advisers (Bolgia 8), divisive individuals (Bolgia 9) and various falsifiers such as alchemists, perjurers, and counterfeits (Bolgia 10).
+      8 - Treachery - The last Ninth Circle of Hell is divided into 4 Rounds according to the seriousness of the sin. Though all residents are frozen in an icy lake. Those who committed more severe sin are deeper within the ice. Each of the 4 Rounds is named after an individual who personifies the sin. Thus Round 1 is named Caina after Cain who killed his brother Abel, Round 2 is named Antenora after Anthenor of Troy who was Priam’s counselor during the Trojan War, Round 3 is named Ptolomaea after Ptolemy (son of Abubus), while Round 4 is named Judecca after Judas Iscariot, the apostle who betrayed Jesus with a kiss.
+  */
   constructor(width, height, num_depths) {
     // Generate map 
     var simplex = new SimplexNoise();

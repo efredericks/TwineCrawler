@@ -22,6 +22,10 @@ Images:
 * https://unsplash.com/photos/lLP7s9Rpw7E
 */
 
+/* Use later! 
+https://www.goodreads.com/work/quotes/2377563-inferno
+*/
+
 :: PassageFooter [PassageFooter]
 /*<section class="map">\
   <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\
@@ -171,9 +175,9 @@ Edgar Allen Poe - Ulalume
 [[Return|previous()]]
 
 :: Begin [start]
-
+\
 /* https://etc.usf.edu/lit2go/147/the-works-of-edgar-allan-poe/5260/ulalume/ */\
-<div class="poem">
+<div class="poem">\
 The skies they were ashen and sober;
 The leaves they were crisped and sere—
 The leaves they were withering and sere;
@@ -187,8 +191,8 @@ In the ghoul—haunted woodland of [[Weir]]...
 from [[Edgar Allen Poe - Ulalume|Poem]]
 
 :: Weir [grave]
-
-<div class="poem">
+\
+<div class="poem">\
 ...And we passed to the end of the vista,
 But were stopped by the door of a tomb—
 By the door of a legended tomb;
@@ -351,3 +355,9 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 /* 
   <<=UI.alert("You smell of elderberries");>>
 */
+
+:: Intended
+
+/* Based on what has happened thus far, either you did it or it was something else? */\
+
+Your intended lies cold on a slab of marble.  A horrific scar marks the corpse; dried blood crusts the pale skin.  Evidence of your rage personified.
