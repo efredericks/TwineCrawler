@@ -992,7 +992,20 @@ class Room {
     } else { // hand-made room
  		  this.room_type = noise_value;
 		  this.title = "TBD";
-			this.description = "TBD";
+      this.description = "TBD";
+
+      if (noise_value == ROOM_SPRITES.BLANK_FLOOR) {
+        let _r = Math.random();
+        if (_r > 0.6)
+ 		      this.room_type = noise_value;
+        else if (_r > 0.4)
+ 		      this.room_type = ROOM_SPRITES.FLOOR_1;
+        else if (_r > 0.2)
+ 		      this.room_type = ROOM_SPRITES.FLOOR_2;
+        else
+ 		      this.room_type = ROOM_SPRITES.FLOOR_3;
+
+      }
     }
 	}	
 }
@@ -1104,15 +1117,15 @@ setup.drawMap = function(_map, _player, _friends) {
                   break;
                 case ROOM_SPRITES.BLANK_FLOOR:
                   // for now, randomize floor placement with preference to blank
-                  let _r = Math.random();
-                  if (_r > 0.6)
+                  //let _r = Math.random();
+                  //if (_r > 0.6)
                     _render += "<div class='blank-floor " + _cls + "'></div>";
-                  else if (_r > 0.4)
-                    _render += "<div class='floor-1 " + _cls + "'></div>";
-                  else if (_r > 0.2)
-                    _render += "<div class='floor-2 " + _cls + "'></div>";
-                  else
-                    _render += "<div class='floor-3 " + _cls + "'></div>";
+                  //else if (_r > 0.4)
+                   // _render += "<div class='floor-1 " + _cls + "'></div>";
+                  //else if (_r > 0.2)
+                   // _render += "<div class='floor-2 " + _cls + "'></div>";
+                  //else
+                   // _render += "<div class='floor-3 " + _cls + "'></div>";
                   break;
                 case ROOM_SPRITES.CONCRETE_WALL:
     							_render += "<div class='concrete-wall " + _cls + "'></div>";
