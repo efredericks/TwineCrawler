@@ -5,7 +5,7 @@ TwineCrawler
 {
 	"ifid": "F810BEB9-79D6-447D-BE89-41C8C63202B8",
 	"format": "SugarCube",
-	"format-version": "2.31.1",
+	"format-version": "2.34.1",
 	"start": "Begin",
 	"zoom": 1
 }
@@ -247,7 +247,9 @@ You are in <<= setup.map.maps_names[setup.player.depth]>> (Depth <<= setup.playe
 </section>\
 </section>\
 <section class="map">\
-  <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\
+  <div id="map_wrapper">\
+    <<= setup.drawMap(setup.map, setup.player, setup.enemies) >>\
+  </div>\
 </section>\
 /* This needs to be a call to javascript to also check collisions with env, enemies, etc */\
 <section class="nav">\
@@ -258,6 +260,7 @@ You are in <<= setup.map.maps_names[setup.player.depth]>> (Depth <<= setup.playe
       <<set $player.row = _newRow>>\
       <<set $player.col = _newCol>>\
     <</link>>\*/\
+    /* 
   <<if setup.player.row > 0 and setup.player.col > 0>>\
     <span>\
       <<link [[Up Left|ProcGen]]>>\
@@ -349,6 +352,7 @@ You are in <<= setup.map.maps_names[setup.player.depth]>> (Depth <<= setup.playe
   <<else>>\
     <span>Down Right</span>\
   <</if>>\
+  */
 </section>\
 /*
 <<nobr>>

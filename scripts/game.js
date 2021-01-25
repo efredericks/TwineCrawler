@@ -6,6 +6,11 @@
 */
 
 
+// TODO
+// camera centered around player (larger map)
+// decouple twine from jquery (only update when triggered)
+
+
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
   constructor(name, row, col, depth, race, char_mod, hp) {
@@ -204,7 +209,7 @@ setup.getInteractions = function(_map, _player, _friends) {
 }
 
 setup.drawMap = function(_map, _player, _friends) {
-  let _render = "<div class='map_wrapper'>";
+  let _render = "";//<div class='map_wrapper'>";
   //let _render = "<table cellspacing='0'>";
   for (let _row = 0; _row < _map.maps[_player.depth].length; _row++) {
     //_render += "<tr>";
@@ -344,7 +349,7 @@ setup.drawMap = function(_map, _player, _friends) {
     }
 //    _render += "</tr>";
   }
-	_render += "</div>";
+	//_render += "</div>";
 	//_render += "</table>";
 	return _render;
 }
@@ -371,6 +376,13 @@ setup.checkValidMoves = function(_map, _row, _col) {
 	//console.log("moves", moves);
 
 	return moves;
+}
+
+setup.redrawMap = function() {
+  let _map = setup.drawMap(setup.map, setup.player, setup.enemies);
+  console.log(setup.player.row, setup.player.col);
+  console.log(_map);
+  $("#map_wrapper").html(_map);
 }
 
 setup.tickGame = function() {
@@ -476,17 +488,32 @@ setup.loadModules.then(function() {
       let _validMoves = setup.checkValidMoves(setup.map.maps[setup.player.depth], setup.player.row, setup.player.col);
       let _check = null;
 
+      // state update keys
+      // update the game state if one of these keys are pressed
+      let _tick_keys = [101,190,38,75,104,40,74,98,37,72,100,39,76,102,78,99,66,97,85,105,89,103];
+      _tick_keys.push(49);
+      _tick_keys.push(50);
+
+      let _update_engine_keys = [32];
+
+
+
+      // TODO
+      // - add check to see if passage should update
+      // - add function to redraw map
+
       //alert(event.which);
 
       switch (event.which) {
         //DEBUG!
         case 49: // 1
           _check = "DEBUG-inc"
+          _tick = true;
           break;
         case 50: // 2
           _check = "DEBUG-dec"
+          _tick = true;
           break;
-
 
 
         case 101: // numpad 5
@@ -500,6 +527,7 @@ setup.loadModules.then(function() {
           _check = [setup.player.row-1, setup.player.col];
           break;
         
+      //DEBUG
         case 40: // down arrow 
         case 74: // j
         case 98: // numpad 2
@@ -554,8 +582,9 @@ setup.loadModules.then(function() {
           setup.player.depth++;
         Engine.play("ProcGen");
       } else if (_check == "wait") { // don't move but refresh
-        setup.tickGame();
-        Engine.play("ProcGen");
+        console.log("wait");
+ //       setup.tickGame();
+  //      Engine.play("ProcGen");
       } else if (_check != null) { // check if move exists
         let _exists = false;
 
@@ -566,12 +595,25 @@ setup.loadModules.then(function() {
             setup.player.row = _check[0];
             setup.player.col = _check[1];
 
-            setup.tickGame();
-            Engine.play("ProcGen");
+ //           setup.tickGame();
+//            Engine.play("ProcGen");
             break;
           }
         }
       } 
+
+      if (_tick_keys.includes(event.which)) {
+        setup.tickGame();
+        setup.redrawMap();
+      }
+      if (_update_engine_keys.includes(event.which))
+        Engine.play("ProcGen");
+
+//      if (_tick_keys.includes(event.which)) {
+ //       setup.tickGame();
+  //      Engine.play("ProcGen");
+   //   }
+
     });
   }());
 

@@ -495,13 +495,13 @@ td {
   margin: 0px;
 }
 
-.map_wrapper {
+#map_wrapper {
   display: grid;
   grid-template-columns: repeat(30, 1fr);
   grid-auto-rows: minmax(12px, auto);
   width:360px;/*480px;*/
 }
-.map_wrapper div {
+#map_wrapper div {
   /*background: #333;*/
   width: 12px;
   height: 12px;
