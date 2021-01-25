@@ -219,12 +219,13 @@ My HP is $enemy.hp!  What should we do about that?
 
 :: ProcGen [proc]
 <<when setup.loadModules>>\
-Welcome to TwineCrawler <<= setup.player.name>>!\
+Welcome to TwineCrawler <<= setup.player.name>>!
+You are in <<= setup.map.maps_names[setup.player.depth]>> (Depth <<= setup.player.depth+1>>)!
 
 <section class="map_content">\
-<h2><<= setup.map.map[setup.player.row][setup.player.col].title>></h2>\
+<h2><<= setup.map.maps[setup.player.depth][setup.player.row][setup.player.col].title>></h2>\
 /* If no enemy, show description */
-<p><<= setup.map.map[setup.player.row][setup.player.col].description>></p>\
+<p><<= setup.map.maps[setup.player.depth][setup.player.row][setup.player.col].description>></p>\
 <section class="map_objects">\
   <<set _objs to setup.getInteractions(setup.map, setup.player, setup.enemies) >>\
   <<for _i to 0; _i lt _objs.length; _i++>>\
@@ -241,7 +242,7 @@ Welcome to TwineCrawler <<= setup.player.name>>!\
 </section>\
 /* This needs to be a call to javascript to also check collisions with env, enemies, etc */\
 <section class="nav">\
-  <<set _validMoves to setup.checkValidMoves(setup.map.map, setup.player.row, setup.player.col)>>\
+  <<set _validMoves to setup.checkValidMoves(setup.map.maps[setup.player.depth], setup.player.row, setup.player.col)>>\
     /*<<link [[_temp_title|ProcGen]]>>\
       <<set $player.last_row = $player.row>>\
       <<set $player.last_col = $player.col>>\

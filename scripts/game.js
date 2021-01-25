@@ -8,10 +8,11 @@
 
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
-  constructor(name, row, col, race, char_mod, hp) {
+  constructor(name, row, col, depth, race, char_mod, hp) {
     this.name      = name;
     this.row       = row;
     this.col       = col;
+    this.depth     = depth;
     this.race      = race;
     this.char_mod  = char_mod;
     this.hp        = hp;
@@ -60,18 +61,35 @@ class GameMap {
       6 - Violence - The Seventh Circle of Hell is divided into three rings. The Outer Ring houses murderers and others who were violent to other people and property. Here, Dante sees Alexander the Great (disputed), Dionysius I of Syracuse, Guy de Montfort and many other notable historical and mythological figures such as the Centaurus, sank into a river of boiling blood and fire. In the Middle Ring, the poet sees suicides who have been turned into trees and bushes which are fed upon by harpies. But he also sees here profligates, chased and torn to pieces by dogs. In the Inner Ring are blasphemers and sodomites, residing in a desert of burning sand and burning rain falling from the sky.
       7 - Fraud - The Eight Circle of Hell is resided by the fraudulent. Dante and Virgil reach it on the back of Geryon, a flying monster with different natures, just like the fraudulent. This circle of Hell is divided into 10 Bolgias or stony ditches with bridges between them. In Bolgia 1, Dante sees panderers and seducer. In Bolgia 2 he finds flatterers. After crossing the bridge to Bolgia 3, he and Virgil see those who are guilty of simony. After crossing another bridge between the ditches to Bolgia 4, they find sorcerers and false prophets. In Bolgia 5 are housed corrupt politicians, in Bolgia 6 are hypocrites and in the remaining 4 ditches, Dante finds hypocrites (Bolgia 7), thieves (Bolgia 7), evil counselors and advisers (Bolgia 8), divisive individuals (Bolgia 9) and various falsifiers such as alchemists, perjurers, and counterfeits (Bolgia 10).
       8 - Treachery - The last Ninth Circle of Hell is divided into 4 Rounds according to the seriousness of the sin. Though all residents are frozen in an icy lake. Those who committed more severe sin are deeper within the ice. Each of the 4 Rounds is named after an individual who personifies the sin. Thus Round 1 is named Caina after Cain who killed his brother Abel, Round 2 is named Antenora after Anthenor of Troy who was Priam’s counselor during the Trojan War, Round 3 is named Ptolomaea after Ptolemy (son of Abubus), while Round 4 is named Judecca after Judas Iscariot, the apostle who betrayed Jesus with a kiss.
+
   */
   constructor(width, height, num_depths) {
-    // Generate map 
-    var simplex = new SimplexNoise();
-  	this.map = new Array(height);
-    for (var row = 0; row < height; row++) {
-	    var t_row = new Array(width);
-      for (var col = 0; col < width; col++) {
-        t_row[col] = new Room("title " + row + "," + col, "desc", simplex.noise2D(col, row));
+    this.maps = new Array(num_depths); 
+    this.maps_names = new Array(num_depths);
+
+    for (let i = 0; i < num_depths; i++) {
+      // Generate map 
+      let simplex = new SimplexNoise();
+    	let _map = new Array(height);
+      for (var row = 0; row < height; row++) {
+  	    let t_row = new Array(width);
+        for (var col = 0; col < width; col++) {
+          t_row[col] = new Room("title " + row + "," + col, "desc", simplex.noise2D(col, row));
+        }
+        _map[row] = t_row;
       }
-      this.map[row] = t_row;
-	  }
+      this.maps[i] = _map;
+    }
+
+    this.maps_names[0] = "Limbo";
+    this.maps_names[1] = "Lust";
+    this.maps_names[2] = "Gluttony";
+    this.maps_names[3] = "Greed";
+    this.maps_names[4] = "Anger";
+    this.maps_names[5] = "Heresy";
+    this.maps_names[6] = "Violence";
+    this.maps_names[7] = "Fraud";
+    this.maps_names[8] = "Treachery";
   }
 }
 class Item {
@@ -147,9 +165,9 @@ setup.getInteractions = function(_map, _player, _friends) {
 setup.drawMap = function(_map, _player, _friends) {
   let _render = "<div class='map_wrapper'>";
   //let _render = "<table cellspacing='0'>";
-  for (let _row = 0; _row < _map.map.length; _row++) {
+  for (let _row = 0; _row < _map.maps[_player.depth].length; _row++) {
     //_render += "<tr>";
-    for (let _col = 0; _col < _map.map[_row].length; _col++) {
+    for (let _col = 0; _col < _map.maps[_player.depth][_row].length; _col++) {
       // only show a little area around the player, it's dark here!
       /*
     3 3 3 3 3 3 3
@@ -188,15 +206,15 @@ setup.drawMap = function(_map, _player, _friends) {
 						isEmpty = false;
 					}
 				}
-				if (isEmpty && !_map.map[_row][_col].blocked) {
-          if ((_cls == "full") && !(_map.map[_row][_col].discovered)){
+				if (isEmpty && !_map.maps[_player.depth][_row][_col].blocked) {
+          if ((_cls == "full") && !(_map.maps[_player.depth][_row][_col].discovered)){
             _render += "<div class='dark'></div>";
           } else {
             // override visibility if discovered
-            if (_map.map[_row][_col].discovered)
+            if (_map.maps[_player.depth][_row][_col].discovered)
               _cls = "quarter";
 
-		  			switch (_map.map[_row][_col].room_type) {
+		  			switch (_map.maps[_player.depth][_row][_col].room_type) {
 	  					case ROOM_TYPES.STALAGS:
   							_render += "<div id='stalags' class='" + _cls + "'></div>";
   							//_render += "<div class='stalags " + _cls + "'>△</div>";
@@ -271,7 +289,7 @@ setup.checkValidMoves = function(_map, _row, _col) {
 
 setup.tickGame = function() {
   // update room state
-  setup.map.map[setup.player.row][setup.player.col].discovered = true;
+  setup.map.maps[setup.player.depth][setup.player.row][setup.player.col].discovered = true;
 
   // update enemies
   for (let i = 0; i < setup.enemies.length; i++) {
@@ -351,7 +369,7 @@ var doStuff = function () {
 setup.loadModules = importScripts("js/helpers.js", "js/simplex-noise.js");//, "js/character.js", "scripts/room.js", "js/map.js");
 
 setup.loadModules.then(function() {
-  setup.player = new Character("Erik", 0, 0, RACE.HUMAN, RACE.NORMAL, 100);
+  setup.player = new Character("Erik", 0, 0, 0, RACE.HUMAN, RACE.NORMAL, 100);
   setup.enemies = new Array();
   for (let i = 0; i < setup.NUM_ENEMIES; i++) {
     let _n = "Enemy " + i;
@@ -359,22 +377,32 @@ setup.loadModules.then(function() {
     let _rm = randomEnum(CHAR_MOD);
     let _row = randomInt(1, setup.MAP_HEIGHT-1);
     let _col = randomInt(1, setup.MAP_WIDTH-1);
-    setup.enemies.push(new Character(_n, _row, _col, _r, _rm, 100));
+    setup.enemies.push(new Character(_n, _row, _col, 0, _r, _rm, 100));
   }
   setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
-  setup.map.map[0][0].discovered = true;
-  setup.map.map[0][0].blocked = false;
+  setup.map.maps[setup.player.depth][0][0].discovered = true;
+  setup.map.maps[setup.player.depth][0][0].blocked = false;
   //console.log(setup.map);
 
 
   $(function() {
     jQuery(document).keyup((event) => {
-      let _validMoves = setup.checkValidMoves(setup.map.map, setup.player.row, setup.player.col);
+      let _validMoves = setup.checkValidMoves(setup.map.maps[setup.player.depth], setup.player.row, setup.player.col);
       let _check = null;
 
       //alert(event.which);
 
       switch (event.which) {
+        //DEBUG!
+        case 49: // 1
+          _check = "DEBUG-inc"
+          break;
+        case 50: // 2
+          _check = "DEBUG-dec"
+          break;
+
+
+
         case 101: // numpad 5
         case 190: // period
           _check = "wait";
@@ -429,7 +457,17 @@ setup.loadModules.then(function() {
           break;
       }
 
-      if (_check == "wait") { // don't move but refresh
+
+      // DEBUG!
+      if (_check == "DEBUG-inc") {
+        if (setup.player.depth > 0)
+          setup.player.depth--;
+        Engine.play("ProcGen");
+      } else if (_check == "DEBUG-dec") {
+        if (setup.player.depth < (setup.NUM_FLOORS-1))
+          setup.player.depth++;
+        Engine.play("ProcGen");
+      } else if (_check == "wait") { // don't move but refresh
         setup.tickGame();
         Engine.play("ProcGen");
       } else if (_check != null) { // check if move exists
