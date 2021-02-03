@@ -1348,6 +1348,330 @@ var doStuff = function () {
   });
 };*/
 
+function initROT() {
+  const tileSet = document.createElement("img");
+  tileSet.src = "assets/colored.png";
+
+  const displayOptions = {
+    // Configure the display
+    bg: "white", // background
+    fg: "dimGrey", // foreground
+    fontFamily: "Consolas", // font (use a mono)
+    width: 25,
+    height: 15, // canvas height and width
+    depths: 9,
+    fontSize: 12, // canvas fontsize
+    forceSquareRatio: true, // make the canvas squared ratio
+
+    layout: "tile",
+    tileWidth: 12,
+    tileHeight: 12,
+    tileSet: tileSet,
+    tileMap: {
+      "X": [66,40],
+      "@": [14,105],
+      "+": [1,40],
+      ">": [131,1],
+      "<": [144,1],
+      ".": [40,27],
+    }
+  };
+
+  // Object containing colors per tile
+  // you may add as much as you want corresponding to characters
+  // they are then applied in gameworld.draw
+  const colors = {
+    ".": "lightgrey" // the moveable path
+  };
+
+  setup.Display = null; // give the browser time to load fonts
+
+  setup.Game = {
+    map: [],
+    maps: [],
+    win: false,
+    current_depth: 0,
+    init: async function () {
+      await sleep(500).then(() => {
+        setup.Display = new ROT.Display(displayOptions);
+        let canvas = document.getElementById("canvas");
+        canvas.appendChild(setup.Display.getContainer());
+        console.log("Depth " + setup.Game.current_depth);
+      });
+
+      setup.Display.clear();
+      this.createLevel();
+      Player.init();
+      this.engine(); // start the game engine
+      this.draw();
+    },
+    engine: async function () {
+      while (true) {
+        await Player.act();
+        this.draw();
+      }
+    },
+    createLevel: function () {
+      setup.GameWorld.generate();
+    },
+    draw: function () {
+      setup.Display.clear();
+      setup.GameWorld.draw();
+      Player.draw();
+    },
+    endGame: function () {
+      this.win = true;
+      setup.Display.clear();
+      setup.Display.draw(8, 8, "You logged the rocket!", "violet");
+    }
+  };
+
+  // initialize the game objects
+  setup.GameWorld = {
+    map: [],
+    maps: [],
+    freeCells: [],
+    moveSpace: [],
+    generate: function () {
+      for (let d = 0; d < displayOptions.depths; d++) {
+      let map = [];
+
+      for (let i = 0; i < displayOptions.width; i++) {
+        map[i] = [];
+        for (let j = 0; j < displayOptions.height; j++) {
+          map[i][j] = "+"; // create the walls
+        }
+      }
+
+      let freeCells = []; // this is where we shall store the moveable space
+
+      let digger = null;
+      switch (d) {
+        case 0:
+          digger = new ROT.Map.Cellular(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          digger.randomize(0.4);
+          break;
+        case 1:
+          digger = new ROT.Map.Uniform(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+        case 2:
+          digger = new ROT.Map.Digger(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+        case 3:
+          digger = new ROT.Map.Rogue(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+        case 4:
+          digger = new ROT.Map.DividedMaze(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+        case 5:
+          digger = new ROT.Map.IceyMaze(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+        case 6:
+        default:
+          digger = new ROT.Map.EllerMaze(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+
+      }
+      //if (d === 0) {
+      //} else {
+
+      //let digger = new ROT.Map.Cellular(
+      //let digger = new ROT.Map.Uniform(
+      //let digger = new ROT.Map.Digger(
+      //let digger = new ROT.Map.Rogue(
+      //let digger = new ROT.Map.DividedMaze(
+      //let digger = new ROT.Map.IceyMaze(
+      //digger = new ROT.Map.EllerMaze(
+  //      displayOptions.width - 2,
+  //     displayOptions.height - 2
+    //  );
+    // }
+      //digger.randomize(0.4);
+      digger.create((x, y, value) => {
+        if (value) {
+          map[x + 1][y + 1] = "X"; // create the walls
+        } else {
+          freeCells.push({ x: x + 1, y: y + 1 });
+          map[x + 1][y + 1] = "."; // add . to every free space just for esthetics
+        }
+      });
+
+      // put the exit gate on the last free cell
+      const lastFreeCell = freeCells.pop();
+      map[lastFreeCell.x][lastFreeCell.y] = ">";
+
+      // if not on depth 0, pick a random cell to go up
+      if (d > 0) {
+        const r_idx = getRandomFreeCellIndex(freeCells);
+        const r_freeCell = freeCells[r_idx];
+        map[r_freeCell.x][r_freeCell.y] = "<";
+        freeCells.splice(r_idx, 1);
+      }
+
+      //this.map = map;
+      //this.freeCells = freeCells;
+      this.maps.push(map);
+      this.freeCells.push(freeCells);
+      }
+      Player.justMoved = false;
+    },
+    // make it impossible to pass through if across an obstacle
+    isPassable: function (x, y) {
+      if (setup.GameWorld.maps[setup.Game.current_depth][x][y] === "+" || setup.GameWorld.maps[setup.Game.current_depth][x][y] === "X") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    draw: function () {
+      this.maps[setup.Game.current_depth].forEach((element, x) => {
+        element.forEach((element, y) => {
+          setup.Display.draw(x, y, element, colors[element] || "red");
+        });
+      });
+    }
+  };
+
+  // create the player
+  let Player = {
+    x: null,
+    y: null,
+    depth: null,
+    init: function () {
+      let playerStart = setup.GameWorld.freeCells[setup.Game.current_depth][0]; // put the player in the first available freecell
+      this.x = playerStart.x;
+      this.y = playerStart.y;
+      this.depth = 0;
+      console.log("Depth " + setup.Game.current_depth);
+    },
+    draw: function () {
+      setup.Display.draw(this.x, this.y, "@", "black");
+    },
+    act: async function () {
+      let action = false;
+      while (!action) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        let e = await new Promise((resolve) => {
+          window.addEventListener("keydown", resolve, { once: true });
+        });
+        action = this.handleKey(e);
+      } //Await a valid movement
+
+      // make it end when the rocket reaches the earth
+      if (setup.GameWorld.maps[setup.Game.current_depth][this.x][this.y] === ">") {
+        setup.Game.endGame();
+        this.depth++;
+        setup.Game.current_depth++; // used to check enemy depth
+        //Game.createLevel();
+        this.init();
+      } else if (setup.GameWorld.maps[setup.Game.current_depth][this.x][this.y] === "<") {
+        setup.Game.endGame();
+        this.depth--;
+        setup.Game.current_depth--; // used to check enemy depth
+        //Game.createLevel();
+        this.init();
+      }
+    },
+    handleKey: function (e) {
+      var keyCode = [];
+      //Arrows keys
+      keyCode[38] = 0; // key-up
+      keyCode[75] = 0;
+
+      keyCode[85] = 1;// key-up-right
+
+      keyCode[39] = 2; // key-right
+      keyCode[76] = 2;
+
+      keyCode[78] = 3; // key-down-right
+
+      keyCode[40] = 4; // key-down
+      keyCode[74] = 4;
+
+      keyCode[66] = 5; // key-down-left
+
+      keyCode[37] = 6; // key-left
+      keyCode[72] = 6;
+
+      keyCode[89] = 7; // key-up-left
+
+      var code = e.keyCode;
+      //console.log(code);
+
+      if (!(code in keyCode)) {
+        return false;
+      }
+
+      let diff = ROT.DIRS[8][keyCode[code]];
+      if (setup.GameWorld.isPassable(this.x + diff[0], this.y + diff[1])) {
+        this.x += diff[0];
+        this.y += diff[1];
+        this.justMoved = true;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  window.addEventListener(
+    "keydown",
+    function (e) {
+      // space and arrow keys
+      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+      }
+    },
+    false
+  );
+
+  //window.onload = setup.Game.init();
+  setup.Game.init();
+  window.focus();
+}
+
+
+
+/*
+var doStuff = function () {
+  var p1 = promise1();
+  var p2 = p1.then(promise2);
+  var p3 = p1.then(promise3); // if you actually need to wait for p2 here, do.
+  return Promise.all([p1, p2, p3]).catch(function(err){
+      // clean up based on err and state, can unwrap promises here
+  });
+};*/
+
+setup.initGame = function() {
+  $("#passages").append("<div id='canvas'></div>");
+  initROT();
+}
+
 // Load all modules and return a promise here
 // REPLACE SIMPLEX WITH FAST SIMPLEX!
 setup.loadModules = importScripts("js/helpers.js", 
@@ -1355,6 +1679,12 @@ setup.loadModules = importScripts("js/helpers.js",
   "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js");//, "js/character.js", "scripts/room.js", "js/map.js");
 
 setup.loadModules.then(function() {
+//  $("#passages").append("<div id='canvas'></div>");
+//  initROT();
+
+
+
+
   /*
   setup.player = new Character("Erik", 0, 0, 0, RACE.HUMAN, RACE.NORMAL, 100);
   setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
@@ -1805,10 +2135,13 @@ My HP is $enemy.hp!  What should we do about that?
 [[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="8" name="ProcGen" tags="proc" position="975,100" size="100,100">ROT.js time
 
 &lt;&lt;nobr&gt;&gt;
-  &lt;&lt;when setup.loadModules&gt;&gt;
+&lt;!-- 
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;center&quot; id=&quot;canvas&quot;&gt;&lt;/div&gt;  
-    &lt;/div&gt;
+   &lt;/div&gt;--&gt;
+  &lt;&lt;when setup.loadModules&gt;&gt;
+    &lt;&lt;run setup.initGame()&gt;&gt;
+      Should be loading!
   &lt;&lt;/when&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="ProcGen2" tags="proc" position="1100,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!

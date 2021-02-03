@@ -7,3 +7,7 @@ function randomEnum(obj) {
 function randomListItem(obj) {
  return obj[Math.floor(Math.random() * obj.length)];
 }
+
+function getRandomFreeCellIndex(cells) {
+  return Math.floor(Math.random() * cells.length);
+}

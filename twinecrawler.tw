@@ -231,10 +231,13 @@ My HP is $enemy.hp!  What should we do about that?
 ROT.js time
 
 <<nobr>>
-  <<when setup.loadModules>>
+<!-- 
   <div class="container">
     <div class="center" id="canvas"></div>  
-    </div>
+   </div>-->
+  <<when setup.loadModules>>
+    <<run setup.initGame()>>
+      Should be loading!
   <</when>>
 <</nobr>>
 
