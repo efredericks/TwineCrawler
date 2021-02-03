@@ -556,8 +556,8 @@ function initROT() {
     bg: "white", // background
     fg: "dimGrey", // foreground
     fontFamily: "Consolas", // font (use a mono)
-    width: 25,
-    height: 15, // canvas height and width
+    width: setup.MAP_WIDTH,//25,
+    height: setup.MAP_HEIGHT,//15, // canvas height and width
     depths: 9,
     fontSize: 12, // canvas fontsize
     forceSquareRatio: true, // make the canvas squared ratio
@@ -647,43 +647,49 @@ function initROT() {
       let digger = null;
       switch (d) {
         case 0:
+          digger = new ROT.Map.Arena(
+            displayOptions.width - 2,
+            displayOptions.height - 2
+          );
+          break;
+        case 1:
           digger = new ROT.Map.Cellular(
             displayOptions.width - 2,
             displayOptions.height - 2
           );
           digger.randomize(0.4);
           break;
-        case 1:
+        case 2:
           digger = new ROT.Map.Uniform(
             displayOptions.width - 2,
             displayOptions.height - 2
           );
           break;
-        case 2:
+        case 3:
           digger = new ROT.Map.Digger(
             displayOptions.width - 2,
             displayOptions.height - 2
           );
           break;
-        case 3:
+        case 4:
           digger = new ROT.Map.Rogue(
             displayOptions.width - 2,
             displayOptions.height - 2
           );
           break;
-        case 4:
+        case 5:
           digger = new ROT.Map.DividedMaze(
             displayOptions.width - 2,
             displayOptions.height - 2
           );
           break;
-        case 5:
+        case 6:
           digger = new ROT.Map.IceyMaze(
             displayOptions.width - 2,
             displayOptions.height - 2
           );
           break;
-        case 6:
+        case 7:
         default:
           digger = new ROT.Map.EllerMaze(
             displayOptions.width - 2,
@@ -867,7 +873,7 @@ var doStuff = function () {
 };*/
 
 setup.initGame = function() {
-  $("#passages").append("<div id='canvas'></div>");
+  $("#passage-procgen").append("<p align='center' id='canvas'></p>");
   initROT();
 }
 
