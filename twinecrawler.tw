@@ -237,7 +237,7 @@ ROT.js time
    </div>-->
   <<when setup.loadModules>>
     <<run setup.initGame()>>
-      Should be loading!
+    <div id='procgen-content'></div>
   <</when>>
 <</nobr>>
 

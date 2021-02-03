@@ -783,6 +783,13 @@ function initROT() {
         action = this.handleKey(e);
       } //Await a valid movement
 
+      // Twine interaction let's gooo
+      if ((this.x > 10) && (this.y > 10)) {
+        $("#procgen-content").wiki('Welcome to //hell// doom slayer!');
+      } else {
+        $("#procgen-content").html('');
+      }
+
       // make it end when the rocket reaches the earth
       if (setup.GameWorld.maps[setup.Game.current_depth][this.x][this.y] === ">") {
         setup.Game.endGame();
