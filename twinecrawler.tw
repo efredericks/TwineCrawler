@@ -227,6 +227,18 @@ My HP is $enemy.hp!  What should we do about that?
 [[Go Back! | ProcGen]]
 
 :: ProcGen [proc]
+
+ROT.js time
+
+<<nobr>>
+  <<when setup.loadModules>>
+  <div class="container">
+    <div class="center" id="canvas"></div>  
+    </div>
+  <</when>>
+<</nobr>>
+
+:: ProcGen2 [proc]
 <<when setup.loadModules>>\
 Welcome to TwineCrawler <<= setup.player.name>>!
 You are in <<= setup.map.maps_names[setup.player.depth]>> (Depth <<= setup.player.depth+1>>)!

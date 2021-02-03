@@ -1349,9 +1349,13 @@ var doStuff = function () {
 };*/
 
 // Load all modules and return a promise here
-setup.loadModules = importScripts("js/helpers.js", "js/simplex-noise.js");//, "js/character.js", "scripts/room.js", "js/map.js");
+// REPLACE SIMPLEX WITH FAST SIMPLEX!
+setup.loadModules = importScripts("js/helpers.js", 
+  "js/simplex-noise.js",
+  "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js");//, "js/character.js", "scripts/room.js", "js/map.js");
 
 setup.loadModules.then(function() {
+  /*
   setup.player = new Character("Erik", 0, 0, 0, RACE.HUMAN, RACE.NORMAL, 100);
   setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
   setup.map.maps[setup.player.depth][0][0].discovered = true;
@@ -1510,6 +1514,7 @@ setup.loadModules.then(function() {
 
     });
   }());
+  */
 
 
 }).catch(function (err) {
@@ -1617,7 +1622,9 @@ class Room {
 			this.description = "There is a gaping void here.  Don't fall.";
 		}
 	}	
-}*/</script><tw-passagedata pid="1" name="PassageFooter" tags="PassageFooter" position="100,100" size="100,100">/*&lt;section class=&quot;map&quot;&gt;\
+}*/
+/* twine-user-script #6: "rot-game.js" */
+</script><tw-passagedata pid="1" name="PassageFooter" tags="PassageFooter" position="100,100" size="100,100">/*&lt;section class=&quot;map&quot;&gt;\
   &lt;&lt;= setup.drawMap(setup.map, setup.player, setup.enemies) &gt;&gt;\
 &lt;/section&gt;\*/</tw-passagedata><tw-passagedata pid="2" name="StoryInit" tags="" position="225,100" size="100,100"></tw-passagedata><tw-passagedata pid="3" name="StoryMenu" tags="" position="350,100" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;div class=&quot;navContainer&quot;&gt;
@@ -1795,7 +1802,15 @@ You gather your courage and place your hands on a rusted iron gate guarding the 
 
 My HP is $enemy.hp!  What should we do about that?
 
-[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="8" name="ProcGen" tags="proc" position="975,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
+[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="8" name="ProcGen" tags="proc" position="975,100" size="100,100">ROT.js time
+
+&lt;&lt;nobr&gt;&gt;
+  &lt;&lt;when setup.loadModules&gt;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;center&quot; id=&quot;canvas&quot;&gt;&lt;/div&gt;  
+    &lt;/div&gt;
+  &lt;&lt;/when&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="ProcGen2" tags="proc" position="1100,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!
 You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt;&lt;= setup.player.depth+1&gt;&gt;)!
 
@@ -1936,7 +1951,7 @@ You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt
 &lt;&lt;/when&gt;&gt;\
 /* 
   &lt;&lt;=UI.alert(&quot;You smell of elderberries&quot;);&gt;&gt;
-*/</tw-passagedata><tw-passagedata pid="9" name="Intended" tags="" position="1100,100" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
+*/</tw-passagedata><tw-passagedata pid="10" name="Intended" tags="" position="1225,100" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
 
 Your intended lies cold on a slab of marble.  A horrific scar marks the corpse; dried blood crusts the pale skin.  Evidence of your rage personified.</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">

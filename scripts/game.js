@@ -547,10 +547,23 @@ var doStuff = function () {
   });
 };*/
 
+function initRot() {
+
+}
+
 // Load all modules and return a promise here
-setup.loadModules = importScripts("js/helpers.js", "js/simplex-noise.js");//, "js/character.js", "scripts/room.js", "js/map.js");
+// REPLACE SIMPLEX WITH FAST SIMPLEX!
+setup.loadModules = importScripts("js/helpers.js", 
+  "js/simplex-noise.js",
+  "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js");//, "js/character.js", "scripts/room.js", "js/map.js");
 
 setup.loadModules.then(function() {
+  initROT();
+
+
+
+
+  /*
   setup.player = new Character("Erik", 0, 0, 0, RACE.HUMAN, RACE.NORMAL, 100);
   setup.map = new GameMap(setup.MAP_WIDTH, setup.MAP_HEIGHT, setup.NUM_FLOORS);
   setup.map.maps[setup.player.depth][0][0].discovered = true;
@@ -709,6 +722,7 @@ setup.loadModules.then(function() {
 
     });
   }());
+  */
 
 
 }).catch(function (err) {
