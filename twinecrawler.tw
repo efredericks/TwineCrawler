@@ -236,8 +236,12 @@ ROT.js time
     <div class="center" id="canvas"></div>  
    </div>-->
   <<when setup.loadModules>>
+  <div id="game-container">
+    <div id="twine-content">
+    </div>
     <<run setup.initGame()>>
     <div id='procgen-content'></div>
+  </div>
   <</when>>
 <</nobr>>
 

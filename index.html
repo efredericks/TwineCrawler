@@ -799,8 +799,8 @@ const ROOM_SPRITES = {
 };
 Object.freeze(ROOM_SPRITES);
 
-setup.MAP_WIDTH   = 60;//30;
-setup.MAP_HEIGHT  = 30;//17;
+setup.MAP_WIDTH   = 30;//60;//30;
+setup.MAP_HEIGHT  = 20;//30;//17;
 setup.NUM_ENEMIES = 4;
 setup.NUM_FLOORS  = 9;
 /* twine-user-script #3: "game.js" */
@@ -1379,6 +1379,7 @@ function initROT() {
       ">": [131,1],
       "<": [144,1],
       ".": [40,27],
+      "!": [53,105],
     }
   };
 
@@ -1533,10 +1534,18 @@ function initROT() {
       map[lastFreeCell.x][lastFreeCell.y] = ">";
 
       // if not on depth 0, pick a random cell to go up
+      /*
       if (d > 0) {
         const r_idx = getRandomFreeCellIndex(freeCells);
         const r_freeCell = freeCells[r_idx];
         map[r_freeCell.x][r_freeCell.y] = "<";
+        freeCells.splice(r_idx, 1);
+      }*/
+
+      if (d == 3) {
+        const r_idx = getRandomFreeCellIndex(freeCells);
+        const r_freeCell = freeCells[r_idx];
+        map[r_freeCell.x][r_freeCell.y] = "!";
         freeCells.splice(r_idx, 1);
       }
 
@@ -1591,7 +1600,8 @@ function initROT() {
 
       // Twine interaction let's gooo
       if ((this.x > 10) && (this.y > 10)) {
-        $("#procgen-content").wiki('Welcome to //hell// doom slayer!');
+        $("#procgen-content").html('Welcome to //hell// doom slayer!');
+        //$("#procgen-content").wiki('Welcome to //hell// doom slayer!');
       } else {
         $("#procgen-content").html('');
       }
@@ -1609,6 +1619,8 @@ function initROT() {
         setup.Game.current_depth--; // used to check enemy depth
         //Game.createLevel();
         this.init();
+      } else if (setup.GameWorld.maps[setup.Game.current_depth][this.x][this.y] === "!") {
+        UI.alert("HOLY SHITSNACKS YOU RESCUED THE PRINCESS!");
       }
     },
     handleKey: function (e) {
@@ -2158,8 +2170,12 @@ My HP is $enemy.hp!  What should we do about that?
     &lt;div class=&quot;center&quot; id=&quot;canvas&quot;&gt;&lt;/div&gt;  
    &lt;/div&gt;--&gt;
   &lt;&lt;when setup.loadModules&gt;&gt;
+  &lt;div id=&quot;game-container&quot;&gt;
+    &lt;div id=&quot;twine-content&quot;&gt;
+    &lt;/div&gt;
     &lt;&lt;run setup.initGame()&gt;&gt;
     &lt;div id=&#39;procgen-content&#39;&gt;&lt;/div&gt;
+  &lt;/div&gt;
   &lt;&lt;/when&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="ProcGen2" tags="proc" position="1100,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!

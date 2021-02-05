@@ -573,6 +573,7 @@ function initROT() {
       ">": [131,1],
       "<": [144,1],
       ".": [40,27],
+      "!": [53,105],
     }
   };
 
@@ -718,7 +719,7 @@ function initROT() {
           map[x + 1][y + 1] = "X"; // create the walls
         } else {
           freeCells.push({ x: x + 1, y: y + 1 });
-          map[x + 1][y + 1] = "."; // add . to every free space just for esthetics
+          map[x + 1][y + 1] = "."; // add . to every free space just for aesthetics
         }
       });
 
@@ -727,10 +728,18 @@ function initROT() {
       map[lastFreeCell.x][lastFreeCell.y] = ">";
 
       // if not on depth 0, pick a random cell to go up
+      /*
       if (d > 0) {
         const r_idx = getRandomFreeCellIndex(freeCells);
         const r_freeCell = freeCells[r_idx];
         map[r_freeCell.x][r_freeCell.y] = "<";
+        freeCells.splice(r_idx, 1);
+      }*/
+
+      if (d == 3) {
+        const r_idx = getRandomFreeCellIndex(freeCells);
+        const r_freeCell = freeCells[r_idx];
+        map[r_freeCell.x][r_freeCell.y] = "!";
         freeCells.splice(r_idx, 1);
       }
 
@@ -785,7 +794,8 @@ function initROT() {
 
       // Twine interaction let's gooo
       if ((this.x > 10) && (this.y > 10)) {
-        $("#procgen-content").wiki('Welcome to //hell// doom slayer!');
+        $("#procgen-content").html('Welcome to //hell// doom slayer!');
+        //$("#procgen-content").wiki('Welcome to //hell// doom slayer!');
       } else {
         $("#procgen-content").html('');
       }
@@ -803,6 +813,8 @@ function initROT() {
         setup.Game.current_depth--; // used to check enemy depth
         //Game.createLevel();
         this.init();
+      } else if (setup.GameWorld.maps[setup.Game.current_depth][this.x][this.y] === "!") {
+        UI.alert("HOLY SHITSNACKS YOU RESCUED THE PRINCESS!");
       }
     },
     handleKey: function (e) {
