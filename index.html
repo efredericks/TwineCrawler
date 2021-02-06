@@ -1355,7 +1355,7 @@ var doStuff = function () {
 
 function initROT() {
   const tileSet = document.createElement("img");
-  tileSet.src = "assets/colored.png";
+  tileSet.src = "assets/1bitpack_kenney_1.1/Tilesheet/colored.png";//"assets/colored.png";
 
   const displayOptions = {
     // Configure the display
@@ -1369,17 +1369,17 @@ function initROT() {
     forceSquareRatio: true, // make the canvas squared ratio
 
     layout: "tile",
-    tileWidth: 12,
-    tileHeight: 12,
+    tileWidth: 16,//2,
+    tileHeight: 16,//2,
     tileSet: tileSet,
     tileMap: {
-      "X": [66,40],
-      "@": [14,105],
-      "+": [1,40],
-      ">": [131,1],
-      "<": [144,1],
-      ".": [40,27],
-      "!": [53,105],
+      "X": [221,272],//[66,40],
+      "@": [408,170],//[14,105],
+      "+": [170,289],//[1,40],
+      ">": [510,357],//[131,1],
+      "<": [476,357],//[144,1],
+      ".": [17,0],//[40,27],
+      "!": [510,136],//[53,105],
     }
   };
 
@@ -1525,7 +1525,7 @@ function initROT() {
           map[x + 1][y + 1] = "X"; // create the walls
         } else {
           freeCells.push({ x: x + 1, y: y + 1 });
-          map[x + 1][y + 1] = "."; // add . to every free space just for esthetics
+          map[x + 1][y + 1] = "."; // add . to every free space just for aesthetics
         }
       });
 
