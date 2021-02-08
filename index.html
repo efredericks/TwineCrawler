@@ -1353,6 +1353,10 @@ var doStuff = function () {
   });
 };*/
 
+setup.swapPalette = function() {
+  console.log("Swapping palette");
+};
+
 function initROT() {
   const tileSet = document.createElement("img");
   tileSet.src = "assets/1bitpack_kenney_1.1/Tilesheet/colored.png";//"assets/colored.png";
@@ -1986,16 +1990,19 @@ class Room {
 /* twine-user-script #6: "rot-game.js" */
 </script><tw-passagedata pid="1" name="PassageFooter" tags="PassageFooter" position="100,100" size="100,100">/*&lt;section class=&quot;map&quot;&gt;\
   &lt;&lt;= setup.drawMap(setup.map, setup.player, setup.enemies) &gt;&gt;\
-&lt;/section&gt;\*/</tw-passagedata><tw-passagedata pid="2" name="StoryInit" tags="" position="225,100" size="100,100"></tw-passagedata><tw-passagedata pid="3" name="StoryMenu" tags="" position="350,100" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;div class=&quot;navContainer&quot;&gt;
-&lt;&lt;for _i = 0 ; _i &lt; 9 ; ++_i&gt;&gt;
-    &lt;&lt;button &quot;button _i&quot;&gt;&gt;
-        /* insert function here */
-    &lt;&lt;/button&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-&lt;/div&gt;
+&lt;/section&gt;\*/</tw-passagedata><tw-passagedata pid="2" name="StoryInit" tags="" position="225,100" size="100,100">&lt;&lt;set $tiles to true&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryMenu" tags="" position="350,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $tiles is true and tags().includes(&quot;proc&quot;)&gt;&gt;
+  &lt;&lt;link [[ASCII Mode|ProcGen]]&gt;&gt;
+    &lt;&lt;set $tiles to false&gt;&gt;
+    &lt;&lt;script&gt;&gt;setup.swapPalette();&lt;&lt;/script&gt;&gt;
+  &lt;&lt;/link&gt;&gt;
+&lt;&lt;elseif $tiles is false and tags().includes(&quot;proc&quot;)&gt;&gt;
+  &lt;&lt;link [[Tiles Mode|ProcGen]]&gt;&gt;
+    &lt;&lt;set $tiles to true&gt;&gt;
+    &lt;&lt;script&gt;&gt;setup.swapPalette();&lt;&lt;/script&gt;&gt;
+  &lt;&lt;/link&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-
 /*
 &lt;&lt;set _validMoves to setup.checkValidMoves(setup.map, $player.row, $player.col)&gt;&gt;\
 &lt;&lt;for _i to 0; _i lt _validMoves.length; _i++&gt;&gt;\

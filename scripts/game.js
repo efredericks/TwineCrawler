@@ -547,6 +547,10 @@ var doStuff = function () {
   });
 };*/
 
+setup.swapPalette = function() {
+  console.log("Swapping palette");
+};
+
 function initROT() {
   const tileSet = document.createElement("img");
   tileSet.src = "assets/1bitpack_kenney_1.1/Tilesheet/colored.png";//"assets/colored.png";

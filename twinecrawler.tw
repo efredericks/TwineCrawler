@@ -32,18 +32,22 @@ https://www.goodreads.com/work/quotes/2377563-inferno
 </section>\*/
 
 :: StoryInit 
+<<set $tiles to true>>
 
 :: StoryMenu
 <<nobr>>
-<div class="navContainer">
-<<for _i = 0 ; _i < 9 ; ++_i>>
-    <<button "button _i">>
-        /* insert function here */
-    <</button>>
-<</for>>
-</div>
+<<if $tiles is true and tags().includes("proc")>>
+  <<link [[ASCII Mode|ProcGen]]>>
+    <<set $tiles to false>>
+    <<script>>setup.swapPalette();<</script>>
+  <</link>>
+<<elseif $tiles is false and tags().includes("proc")>>
+  <<link [[Tiles Mode|ProcGen]]>>
+    <<set $tiles to true>>
+    <<script>>setup.swapPalette();<</script>>
+  <</link>>
+<</if>>
 <</nobr>>
-
 /*
 <<set _validMoves to setup.checkValidMoves(setup.map, $player.row, $player.col)>>\
 <<for _i to 0; _i lt _validMoves.length; _i++>>\
