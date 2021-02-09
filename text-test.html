@@ -2,6 +2,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#333641">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <style>
   /* https://codepen.io/FrankieDoodie/pen/dgVGad */
   body {
@@ -40,6 +41,34 @@ p {
 </style>
 </head>
 <body>
-  <p>You feel uneasy.</p>
+  <p id="anim">You feel uneasy.</p>
 </body>
+
+<script>
+  let flavors = Array();
+  flavors.push("You feel uneasy.");
+  flavors.push("You feel uneasy.");
+  flavors.push("Invisible eyes are upon you.");
+  flavors.push("You feel as though you are being followed.");
+  flavors.push("Silent footsteps in the distance.");
+  flavors.push("Hushed whispers bounce off marble floors.");
+  flavors.push("The hairs on your neck stiffen.");
+  flavors.push("A soft breath on your neck?  No, just an errant breeze.");
+  flavors.push("You hear a chitinous scuttling in a nearby corner.")
+
+  $(document).ready(function () {
+    let interval = 3000;
+    let cntr = 0;
+    let refresh = function() {
+      $("#anim").html(flavors[cntr]);
+      cntr++;
+      if (cntr > (flavors.length-1))
+        cntr = 0;
+      setTimeout(function() { refresh(); }, interval);
+    };
+    refresh();
+  });
+
+
+</script>
 </html>
