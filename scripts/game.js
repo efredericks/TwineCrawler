@@ -896,15 +896,34 @@ var doStuff = function () {
 };*/
 
 setup.initGame = function() {
-  $("#passage-procgen").append("<p align='center' id='canvas'></p>");
-  initROT();
+  //$("#passage-procgen").append("<p align='center' id='canvas'></p>");
+  //initROT();
+
+  /*
+
+print("Hello and welcome, adventurer, to yet another dungeon!", 'welcome');
+setup.tileMap = createTileMap(1);
+const inventoryOverlayUse = createInventoryOverlay('use');
+const inventoryOverlayDrop = createInventoryOverlay('drop');
+const targetingOverlay = createTargetingOverlay();
+const upgradeOverlay = createUpgradeOverlay();
+const characterOverlay = createCharacterOverlay();
+setupInputHandlers(display);
+draw();
+
+*/
+
+
+
+
 }
 
 // Load all modules and return a promise here
 // REPLACE SIMPLEX WITH FAST SIMPLEX!
 setup.loadModules = importScripts("js/helpers.js", 
   "js/simplex-noise.js",
-  "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js");//, "js/character.js", "scripts/room.js", "js/map.js");
+  "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js",
+  "scripts/roguelike-dev.js");//, "js/character.js", "scripts/room.js", "js/map.js");
 
 setup.loadModules.then(function() {
 //  $("#passages").append("<div id='canvas'></div>");
