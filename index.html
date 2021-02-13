@@ -2840,13 +2840,15 @@ setup.initGame = function() {
   //$("#passage-procgen").append("<p align='center' id='canvas'></p>");
   //initROT();
   initRLDev();
+
 }
 
 // Load all modules and return a promise here
 // REPLACE SIMPLEX WITH FAST SIMPLEX!
 setup.loadModules = importScripts("js/helpers.js", 
   "js/simplex-noise.js",
-  "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js");//, "js/character.js", "scripts/room.js", "js/map.js");
+  "https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js");//,
+  //"scripts/roguelike-dev.js");//, "js/character.js", "scripts/room.js", "js/map.js");
 
 setup.loadModules.then(function() {
 //  $("#passages").append("<div id='canvas'></div>");
@@ -3327,7 +3329,217 @@ My HP is $enemy.hp!  What should we do about that?
 
 &lt;p id=&quot;anim&quot;&gt;&lt;/p&gt;
 
-ROT.js time
+&lt;&lt;nobr&gt;&gt;
+&lt;figure&gt;
+  &lt;div id=&quot;status-bar&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;health-bar&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;health-text&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;inventory-use&quot; class=&quot;overlay&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;inventory-drop&quot; class=&quot;overlay&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;upgrade&quot; class=&quot;overlay&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;targeting&quot; class=&quot;overlay&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;character&quot; class=&quot;overlay&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;messages&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;message-overlay&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;game-instructions&quot;&gt;&lt;/div&gt;
+  &lt;div id=&quot;focus-instructions&quot;&gt;Click game for keyboard focus&lt;/div&gt;
+&lt;/figure&gt;
+
+&lt;style&gt;
+    * {
+        box-sizing: border-box;
+    }
+    
+    figure {
+        text-align: left;
+        display: grid;
+        justify-content: center;
+        grid-template-columns: min-content;
+        grid-template-areas: &quot;game&quot; &quot;status-bar&quot; &quot;message-area&quot; &quot;instructions&quot;;
+    }
+    canvas#game { 
+        grid-area: game;
+        z-index: 1;
+        display: block;
+        max-width: unset;
+        opacity: 0.5;
+    }
+    canvas#game:focus {
+        outline: none;
+        opacity: 1.0;
+    }
+
+    .overlay {
+        grid-area: game;
+        z-index: 0;
+        height: auto;
+        align-self: center;
+        padding: 0.5em;
+        line-height: 1.0;
+        font-family: monospace;
+        font-size: 0.8em;
+        opacity: 0;
+    }
+    .overlay.visible {
+        z-index: 2;
+        pointer-events: none;
+        box-shadow: 0 1px 4px -3px white;
+        opacity: 1;
+    }
+    .overlay ul {
+        column-count: 2;
+        column-gap: 1em;
+        column-fill: balance;
+    }
+    .overlay li {
+        list-style-type: none;
+    }
+    .overlay kbd {
+        display: inline-block;
+        border: 1px solid hsla(0, 0%, 0%, 0.5);
+        padding: 2px 4px;
+        font-weight: normal;
+    }
+    #upgrade {
+        background: hsl(180, 20%, 20%);
+        color: white;
+    }
+    #upgrade ul {
+        column-count: 1;
+    }
+    #upgrade kbd {
+        background: hsl(180, 50%, 30%);
+        color: cyan;
+    }
+    #inventory-use {
+        background: hsl(200, 10%, 20%);
+        color: white;
+    }
+    #inventory-drop {
+        background: hsl(0, 20%, 20%);
+        color: white;
+    }
+    #inventory-use kbd {
+        background: hsl(150, 50%, 30%);
+        color: cyan;
+    }
+    #inventory-drop kbd {
+        background: hsl(60, 50%, 30%);
+        color: yellow;
+    }
+    #targeting {
+        background: hsla(60, 10%, 100%, 0.1);
+        pointer-events: auto;
+        color: white;
+        text-align: center;
+        height: 100%;
+    }
+
+    #character {
+        background: hsla(330, 10%, 20%, 0.5);
+        color: white;
+    }
+
+    #game-instructions {
+        height: 2em;
+        grid-area: instructions;
+        text-align: center;
+    }
+    #game-instructions kbd {
+        background: hsl(150, 50%, 30%);
+        color: cyan;
+        border: 1px solid hsla(0, 0%, 0%, 0.5);
+        padding: 0;
+        margin: 0;
+    }
+        
+    #focus-instructions {
+        height: 2em;
+        grid-area: instructions;
+        text-align: center;
+        background: hsl(60, 100%, 90%);
+        color: black;
+        opacity: 0.0;
+        transition: all 0.2s;
+    }
+    #focus-instructions.visible {
+        opacity: 1.0;
+    }
+
+    #messages, #message-overlay {
+        grid-area: message-area;
+        width: 100%;
+        height: 8em;
+        font-family: var(--monospace), monospace;
+        font-size: 0.8em;
+        line-height: 1.0;
+    }
+    #messages {
+        padding: 0.5em 1em;
+        background: hsl(60, 10%, 10%);
+        color: white;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scrollbar-width: none; /* firefox supports the standard */
+    }
+    #messages::-webkit-scrollbar { /* but chrome, safari do not, naturally */
+        width: 0;
+    }
+    #messages &gt; div {
+        margin-left: 1em;
+        margin-bottom: 0.25em;
+        text-indent: -1em;
+    }
+    #messages &gt; div.welcome       { color: hsl(300,  50%,  70%); }
+    #messages &gt; div.info               { color: hsl(2200,  10%,  80%); }
+    #messages &gt; div.player-attack { color: hsl( 30,  10%,  80%); }
+    #messages &gt; div.player-die    { color: hsl(  0, 100%,  50%); }
+    #messages &gt; div.enemy-attack  { color: hsl(  0,  50%,  80%); }
+    #messages &gt; div.enemy-die     { color: hsl(150,  30%,  70%); }
+    #messages &gt; div.warning       { color: hsl( 60,  50%,  70%); }
+    #messages &gt; div.error         { color: hsl(  0,  75%,  50%); }
+    #messages &gt; div.pick-up       { color: hsl(220,  50%,  80%); }
+    #messages &gt; div.healing       { color: hsl(150,  50%,  70%); }
+
+    #message-overlay {
+        z-index: 2; /* needed for chrome but not firefox or safari; may be a browser bug */
+        height: 0%;
+        padding: 0.5em 1em;
+        opacity: 0.0;
+        pointer-events: none; /* so scroll events go down to the #messages div */
+        white-space: pre-wrap;
+        background: black;
+        color: white;
+        transition: all 0.3s;
+    }
+    #message-overlay.visible {
+        height: 100%;
+        opacity: 1.0;
+        background: hsl(200, 50%, 30%);
+        transition: all 0s;
+    }
+
+    #status-bar {
+        grid-area: status-bar;
+        width: 100%;
+        background: hsl(0, 50%, 20%);
+    }
+    #health-bar {
+        grid-area: status-bar;
+        background: hsl(200, 50%, 40%);
+    }
+    #health-text {
+        grid-area: status-bar;
+        font-size: 0.8em;
+        font-family: var(--sans-serif), sans-serif;
+        color: white;
+        text-align: center;
+    }
+&lt;/style&gt;
+&lt;script defer=&quot;defer&quot; src=&quot;third-party/rot.js&quot;&gt;&lt;/script&gt;
+&lt;script defer=&quot;defer&quot; src=&quot;roguelike-dev.js&quot;&gt;&lt;/script&gt;
+
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="ProcGenNew" tags="proc" position="1225,100" size="100,100">ROT.js time
 
 &lt;!-- 
   &lt;div class=&quot;container&quot;&gt;
@@ -3341,7 +3553,7 @@ ROT.js time
     &lt;div id=&#39;procgen-content&#39;&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;&lt;/when&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="ProcGen2" tags="proc" position="1225,100" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="ProcGen2" tags="proc" position="100,225" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!
 You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt;&lt;= setup.player.depth+1&gt;&gt;)!
 
@@ -3482,7 +3694,7 @@ You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt
 &lt;&lt;/when&gt;&gt;\
 /* 
   &lt;&lt;=UI.alert(&quot;You smell of elderberries&quot;);&gt;&gt;
-*/</tw-passagedata><tw-passagedata pid="11" name="Intended" tags="" position="100,225" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
+*/</tw-passagedata><tw-passagedata pid="12" name="Intended" tags="" position="225,225" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
 
 Your intended lies cold on a slab of marble.  A horrific scar marks the corpse; dried blood crusts the pale skin.  Evidence of your rage personified.</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
