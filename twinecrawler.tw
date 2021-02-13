@@ -231,10 +231,33 @@ My HP is $enemy.hp!  What should we do about that?
 [[Go Back! | ProcGen]]
 
 :: ProcGen [proc]
+<<nobr>>
+<figure id="main_figure">
+  <div id="status-bar"></div>
+  <div id="health-bar"></div>
+  <div id="health-text"></div>
+  <div id="inventory-use" class="overlay"></div>
+  <div id="inventory-drop" class="overlay"></div>
+  <div id="upgrade" class="overlay"></div>
+  <div id="targeting" class="overlay"></div>
+  <div id="character" class="overlay"></div>
+  <div id="messages"></div>
+  <div id="message-overlay"></div>
+  <div id="game-instructions"></div>
+  <div id="focus-instructions">Click game for keyboard focus</div>
+</figure>
+<<when setup.loadModules>>
+<<run setup.initGame()>>
+<</when>>
+<</nobr>>
+
+:: ProcGen-New [proc]
+<<nobr>>
+
+<p id="anim"></p>
 
 ROT.js time
 
-<<nobr>>
 <!-- 
   <div class="container">
     <div class="center" id="canvas"></div>  
