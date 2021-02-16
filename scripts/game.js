@@ -924,7 +924,49 @@ const WIDTH = 60, HEIGHT = 25;
 const STORAGE_KEY = window.location.pathname + '-savegame';
 ROT.RNG.setSeed(127);
 
-const display = new ROT.Display({width: 60, height: 25, fontSize: 16, fontFamily: 'monospace'});
+// emf
+const tileSet = document.createElement("img");
+tileSet.src = "assets/1bitpack_kenney_1.1/Tilesheet/colored.png";//"assets/colored.png";
+
+
+const displayOptions = {
+    // Configure the display
+    bg: "white", // background
+    fg: "dimGrey", // foreground
+    fontFamily: "Consolas", // font (use a mono)
+    width: setup.MAP_WIDTH,//25,
+    height: setup.MAP_HEIGHT,//15, // canvas height and width
+    depths: 9,
+    fontSize: 12, // canvas fontsize
+    forceSquareRatio: true, // make the canvas squared ratio
+
+    layout: "tile",
+    tileWidth: 16,//2,
+    tileHeight: 16,//2,
+    tileSet: tileSet,
+    tileMap: {
+      "X": [221,272],//[66,40],
+      "@": [408,170],//[14,105],
+      "+": [170,289],//[1,40],
+      ">": [510,357],//[131,1],
+      "<": [476,357],//[144,1],
+      ".": [17,0],//[40,27],
+      "!": [510,136],//[53,105],
+      "T": [510,102],//[53,105],
+      "o": [493,34],//[53,105],
+      "%": [714,187],//[53,105],
+      "#": [561,255],//[53,105],
+      "-": [595,102],//[53,105],
+      "/": [544,119],//[53,105],
+      "~": [340,323],//[53,105],
+      //"\\": [510,136],//[53,105],
+      "[": [629,51],//[53,105],
+      " ": [17,0],//[53,105],
+    }
+  };
+const display = new ROT.Display(displayOptions);//{width: 60, height: 25, fontSize: 16, fontFamily: 'monospace'});
+
+
 display.getContainer().setAttribute('id', "game");
 document.getElementById("main_figure").appendChild(display.getContainer());
 //document.querySelector("figure").appendChild(display.getContainer());

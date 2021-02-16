@@ -232,6 +232,9 @@ My HP is $enemy.hp!  What should we do about that?
 
 :: ProcGen [proc]
 <<nobr>>
+<<when setup.loadModules>>
+<<run setup.initGame()>>
+<</when>>
 <figure id="main_figure">
   <div id="status-bar"></div>
   <div id="health-bar"></div>
@@ -246,9 +249,6 @@ My HP is $enemy.hp!  What should we do about that?
   <div id="game-instructions"></div>
   <div id="focus-instructions">Click game for keyboard focus</div>
 </figure>
-<<when setup.loadModules>>
-<<run setup.initGame()>>
-<</when>>
 <</nobr>>
 
 :: ProcGen-New [proc]
