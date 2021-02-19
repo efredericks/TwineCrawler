@@ -1346,9 +1346,12 @@ function draw() {
             let ch = ' ',
                 fg = "black",
                 bg = mapColors[lit][tile.wall];
-            if (!tile || (!DEBUG_ALL_EXPLORED && !tile.explored)) { ch = '}'; }//continue; }
+            if (!tile || (!DEBUG_ALL_EXPLORED && !tile.explored)) { continue; }
             if ((!tile.walkable) && (tile.explored)) ch = '*';
             if ((!tile.walkable) && (!tile.explored)) ch = '}';
+
+
+
             let glyph = glyphMap.get(x, y);
             if (glyph) {
                 ch = lit || glyph[3] ? glyph[0] : ch;
