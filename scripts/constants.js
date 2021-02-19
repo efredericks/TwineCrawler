@@ -88,7 +88,7 @@ const ROOM_SPRITES = {
 };
 Object.freeze(ROOM_SPRITES);
 
-setup.MAP_WIDTH   = 30;//60;//30;
-setup.MAP_HEIGHT  = 20;//30;//17;
+setup.MAP_WIDTH   = 60;//30;//60;//30;
+setup.MAP_HEIGHT  = 30;//20;//30;//17;
 setup.NUM_ENEMIES = 4;
 setup.NUM_FLOORS  = 9;

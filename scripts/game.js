@@ -917,10 +917,12 @@ function initROT() {
 
 /************************* RL DEV FXNS */
 function initRLDev() {
-  console.log("yo");
+  //console.log("yo");
 let DEBUG_ALL_EXPLORED = false;
 
-const WIDTH = 60, HEIGHT = 25;
+//const WIDTH = 60, HEIGHT = 25;
+const WIDTH = setup.MAP_WIDTH
+const HEIGHT = setup.MAP_HEIGHT
 const STORAGE_KEY = window.location.pathname + '-savegame';
 ROT.RNG.setSeed(127);
 
@@ -937,34 +939,36 @@ const displayOptions = {
     width: setup.MAP_WIDTH,//25,
     height: setup.MAP_HEIGHT,//15, // canvas height and width
     depths: 9,
-    fontSize: 12, // canvas fontsize
-    forceSquareRatio: true, // make the canvas squared ratio
+    fontSize: 16, // canvas fontsize
+    //forceSquareRatio: true, // make the canvas squared ratio
 
     layout: "tile",
     tileWidth: 16,//2,
     tileHeight: 16,//2,
     tileSet: tileSet,
     tileMap: {
-      "X": [221,272],//[66,40],
       "@": [408,170],//[14,105],
-      "+": [170,289],//[1,40],
       ">": [510,357],//[131,1],
-      "<": [476,357],//[144,1],
-      ".": [17,0],//[40,27],
-      "!": [714, 187],//[53,105],
       "T": [510,102],//[53,105],
       "o": [493,34],//[53,105],
-      "%": [714,187],//[53,105],
+      "%": [578,204],//[714,187],//[53,105],
+      "!": [714, 187],//[53,105],
       "#": [119,255],//[53,105],
       "-": [595,102],//[53,105],
       "/": [544,119],//[53,105],
       "~": [340,323],//[53,105],
-      //"\\": [510,136],//[53,105],
       "[": [629,51],//[53,105],
+      "X": [221,272],//[66,40],
+      "+": [170,289],//[1,40],
+      "<": [476,357],//[144,1],
+      ".": [17,0],//[40,27],
+      //"\\": [510,136],//[53,105],
       " ": [17,0],//[53,105],
+      "*": [119, 255],
     }
   };
 const display = new ROT.Display(displayOptions);//{width: 60, height: 25, fontSize: 16, fontFamily: 'monospace'});
+//const display = new ROT.Display({width: 60, height: 25, fontSize: 16, fontFamily: 'monospace'});
 
 
 display.getContainer().setAttribute('id', "game");
@@ -1342,6 +1346,7 @@ function draw() {
             let ch = ' ',
                 fg = "black",
                 bg = mapColors[lit][tile.wall];
+            if (!tile.walkable) ch = '*';
             let glyph = glyphMap.get(x, y);
             if (glyph) {
                 ch = lit || glyph[3] ? glyph[0] : ch;
