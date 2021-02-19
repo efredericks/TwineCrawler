@@ -1989,6 +1989,7 @@ const displayOptions = {
       //"\\": [510,136],//[53,105],
       " ": [17,0],//[53,105],
       "*": [119, 255],
+      "}": [0,0],
     }
   };
 const display = new ROT.Display(displayOptions);//{width: 60, height: 25, fontSize: 16, fontFamily: 'monospace'});
@@ -2365,12 +2366,13 @@ function draw() {
     for (let y = 0; y < HEIGHT; y++) {
         for (let x = 0; x < WIDTH; x++) {
             let tile = tileMap.get(x, y);
-            if (!tile || (!DEBUG_ALL_EXPLORED && !tile.explored)) { continue; }
             let lit = DEBUG_ALL_EXPLORED || lightMap.get(x, y) > 0.0;
             let ch = ' ',
                 fg = "black",
                 bg = mapColors[lit][tile.wall];
-            if (!tile.walkable) ch = '*';
+            if (!tile || (!DEBUG_ALL_EXPLORED && !tile.explored)) { ch = '}'; }//continue; }
+            if ((!tile.walkable) && (tile.explored)) ch = '*';
+            if ((!tile.walkable) && (!tile.explored)) ch = '}';
             let glyph = glyphMap.get(x, y);
             if (glyph) {
                 ch = lit || glyph[3] ? glyph[0] : ch;
