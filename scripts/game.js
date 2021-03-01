@@ -918,7 +918,7 @@ function initROT() {
 /************************* RL DEV FXNS */
 function initRLDev() {
   //console.log("yo");
-let DEBUG_ALL_EXPLORED = false;
+let DEBUG_ALL_EXPLORED = true;//false;
 
 //const WIDTH = 60, HEIGHT = 25;
 const WIDTH = setup.MAP_WIDTH
@@ -1278,6 +1278,14 @@ function createTileMap(dungeonLevel) {
             explored: false,
         })
     );
+
+     //     const digger = new ROT.Map.Cellular(
+//            displayOptions.width - 2,
+ //           displayOptions.height - 2
+  //        );
+   //       digger.randomize(0.4);
+
+
     tileMap.dungeonLevel = dungeonLevel;
     tileMap.rooms = digger.getRooms();
     tileMap.corridors = digger.getCorridors();
@@ -1521,6 +1529,12 @@ function takeDamage(source, target, amount) {
     }
 }
 
+function interact(attacker, defender) {
+  let color = attacker.id === player.id? 'player-attack' : 'enemy-attack';
+  print(`${attacker.name} says HI to ${defender.name}`, color);
+  //console.log(`${attacker.name} says HI to ${defender.name}`);
+}
+
 function attack(attacker, defender) {
     let damage = attacker.effective_power - defender.effective_defense;
     let color = attacker.id === player.id? 'player-attack' : 'enemy-attack';
@@ -1627,7 +1641,8 @@ function playerMoveBy(dx, dy) {
     if (tileMap.get(x, y).walkable) {
         let target = blockingEntityAt(x, y);
         if (target && target.id !== player.id) {
-            attack(player, target);
+            interact(player, target);
+            //attack(player, target);
         } else {
             moveEntityTo(player, {x, y});
         }
@@ -1689,7 +1704,8 @@ function enemiesMove() {
                 if (tileMap.get(x, y).walkable) {
                     let target = blockingEntityAt(x, y);
                     if (target && target.id === player.id) {
-                        attack(entity, player);
+                        interact(entity, player);
+                        //attack(entity, player);
                     } else if (target) {
                         // another monster there; can't move
                     } else {
@@ -1870,9 +1886,14 @@ function handlePlayerKeys(key) {
         j:           ['move', 0, +1],
         k:           ['move', 0, -1],
         z:           ['move', 0, 0],
+        y:           ['move', -1, -1],
+        u:           ['move', 1, -1],
+        b:           ['move', -1, 1],
+        n:           ['move', 1, 1],
+        '.':         ['move', 0, 0],
         g:           ['pickup'],
         '>':         ['stairs-down'],
-        u:           ['inventory-open-use'],
+        i:           ['inventory-open-use'],
         d:           ['inventory-open-drop'],
         s:           ['save-game'],
     };
