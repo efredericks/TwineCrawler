@@ -10,6 +10,16 @@
 // camera centered around player (larger map)
 // decouple twine from jquery (only update when triggered)
 
+const roomFlavorTexts = [
+"You are in a brightly-lit room.  Golden wall sconces adorn white marble walls and hold candles that never seem to melt as bright flames dance and wicker.  You find it strange that there are no shadows being cast given the candle light, yet the room remains incandescent.",
+"You are in a cold room of marble.  In the center you see a bronze statue of Adonis, his muscles taught in eternal battle.  Upon closer inspection, his face appears to be a smear, features that may once have been well-defined and beautiful are smudged and ghastly.",
+"Alternating brickwork of coral and copper gird the walls in this room.  A golden pattern is etched into the northern wall.  You make out the Latin for 'Despair.'",
+"You warily tread around a gaping precipice in the center of the room.  Flickering torches in the corners give no indication on its depth.  You pick up an errant pebble and drop it.  You wait.  Nothing.",
+"This room is cheerily lit with a roaring fire in a stone hearth.  A gilt table of ivory lies in the center of the room, the desiccated remains of a slaughtered goat perch on its top.  Eyeless sockets follow you as you move through the room.",
+"An ethereal haze looms a handspan above the tiled floor.  You wave your hand through it, stirring tiny vortices that spin away from you.  The haze remains, but you can make out a splotch of dark red.",
+"You see a small rickety stool set against the southwestern corner of the room, awaiting a person that will never come.  You search around the room, but the stool remains in the northeastern corner, alone.",
+];
+
 
 /*** * MOVE THIS INTO SEPARATE FILES AFTER WE FIGURE OUT THE WHOLE ... IMPORT ORDER ISSUE * ***/
 class Character {
@@ -1205,6 +1215,29 @@ let player = (function() {
     return player;
 })();
 
+function setFlavorTextRoom(room) {
+  room.flavorText = randomListItem(roomFlavorTexts);
+  room.flavorTextShown = false;
+}
+function getFlavorTextRoom(room) {
+  room.flavorTextShown = true;
+  return room.flavorText;
+}
+function getCurrentRoom() {
+  let px = player.location.x;
+  let py = player.location.y;
+  for (let room of tileMap.rooms) {
+    let rb = room.getBottom();
+    let rt = room.getTop();
+    let rr = room.getRight();
+    let rl = room.getLeft();
+
+    if ((px >= rl) && (px <= rr) && (py >= rt) && (py <= rb))
+      return room;
+  }
+  return null;
+}
+
 function populateRoom(room, dungeonLevel) {
     let maxMonstersPerRoom = evaluateStepFunction([[1, 2], [4, 3], [6, 5]], dungeonLevel),
         maxItemsPerRoom = evaluateStepFunction([[1, 1], [4, 2]], dungeonLevel);
@@ -1301,6 +1334,7 @@ function createTileMap(dungeonLevel) {
     // Put monster and items in all the rooms
     for (let room of tileMap.rooms) {
         populateRoom(room, dungeonLevel);
+        setFlavorTextRoom(room, dungeonLevel);
     }
 
     updateTileMapFov(tileMap);
@@ -1370,6 +1404,12 @@ function draw() {
         }
     }
 
+    let r = getCurrentRoom();
+    console.log(r);
+    if ((r !== null) && (!r.flavorTextShown)) {
+      print(getFlavorTextRoom(r), 'warning');
+      r.flavorTextShown = true; // need to flip this when leaving the room
+    }
     updateInstructions();
 }
 
