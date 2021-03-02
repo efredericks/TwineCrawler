@@ -1407,7 +1407,9 @@ function draw() {
     let r = getCurrentRoom();
     console.log(r);
     if ((r !== null) && (!r.flavorTextShown)) {
-      print(getFlavorTextRoom(r), 'warning');
+      let ft = getFlavorTextRoom(r);
+      print(ft, 'warning');
+      UI.alert(ft);
       r.flavorTextShown = true; // need to flip this when leaving the room
     }
     updateInstructions();
