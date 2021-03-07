@@ -25,6 +25,9 @@ Images:
 /* Use later! 
 https://www.goodreads.com/work/quotes/2377563-inferno
 */
+:: PassageHeader [PassageHeader]
+<div id="back"></div>\
+<div id="front"></div>\
 
 :: PassageFooter [PassageFooter]
 /*<section class="map">\

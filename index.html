@@ -98,7 +98,7 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
 		<div id="init-lacking">Your browser lacks required capabilities. Please upgrade it or switch to another to continue.</div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://F810BEB9-79D6-447D-BE89-41C8C63202B8// --><tw-storydata name="TwineCrawler" startnode="5" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="F810BEB9-79D6-447D-BE89-41C8C63202B8" zoom="1" format="SugarCube" format-version="2.34.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "Story Stylesheet" */
+	<!-- UUID://F810BEB9-79D6-447D-BE89-41C8C63202B8// --><tw-storydata name="TwineCrawler" startnode="6" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="F810BEB9-79D6-447D-BE89-41C8C63202B8" zoom="1" format="SugarCube" format-version="2.34.1" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "Story Stylesheet" */
 /* $ tweego -o index.html twinecrawler.tw styles scripts */
 /* twine-user-stylesheet #2: "style.css" */
 /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -425,7 +425,7 @@ img.full-width {
 }
 
 #back {
-  background: url(http://www.tranexnet.com/img/back.png) repeat 20% 20%;
+  background: url('assets/back.png') repeat 20% 20%;
   position: fixed;
   top: 0;
   left: 0;
@@ -452,7 +452,7 @@ img.full-width {
 }
 
 #front {
-  background: url(http://www.tranexnet.com/img/front.png) repeat 35% 35%;
+  background: url('assets/front.png') repeat 35% 35%;
   position: fixed;
   top: 0;
   left: 0;
@@ -2433,7 +2433,7 @@ function draw() {
     if ((r !== null) && (!r.flavorTextShown)) {
       let ft = getFlavorTextRoom(r);
       print(ft, 'warning');
-      UI.alert(ft);
+      //UI.alert(ft);
       r.flavorTextShown = true; // need to flip this when leaving the room
     }
     updateInstructions();
@@ -3432,9 +3432,10 @@ class Room {
 	}	
 }*/
 /* twine-user-script #6: "rot-game.js" */
-</script><tw-passagedata pid="1" name="PassageFooter" tags="PassageFooter" position="100,100" size="100,100">/*&lt;section class=&quot;map&quot;&gt;\
+</script><tw-passagedata pid="1" name="PassageHeader" tags="PassageHeader" position="100,100" size="100,100">&lt;div id=&quot;back&quot;&gt;&lt;/div&gt;\
+&lt;div id=&quot;front&quot;&gt;&lt;/div&gt;\</tw-passagedata><tw-passagedata pid="2" name="PassageFooter" tags="PassageFooter" position="225,100" size="100,100">/*&lt;section class=&quot;map&quot;&gt;\
   &lt;&lt;= setup.drawMap(setup.map, setup.player, setup.enemies) &gt;&gt;\
-&lt;/section&gt;\*/</tw-passagedata><tw-passagedata pid="2" name="StoryInit" tags="" position="225,100" size="100,100">&lt;&lt;set $tiles to true&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryMenu" tags="" position="350,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;/section&gt;\*/</tw-passagedata><tw-passagedata pid="3" name="StoryInit" tags="" position="350,100" size="100,100">&lt;&lt;set $tiles to true&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="StoryMenu" tags="" position="475,100" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $tiles is true and tags().includes(&quot;proc&quot;)&gt;&gt;
   &lt;&lt;link [[ASCII Mode|ProcGen]]&gt;&gt;
     &lt;&lt;set $tiles to false&gt;&gt;
@@ -3464,7 +3465,7 @@ class Room {
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;run setup.tickGame(setup.map, $player, setup.friends)&gt;&gt;
 &lt;/div&gt;
-*/</tw-passagedata><tw-passagedata pid="4" name="Poem" tags="" position="475,100" size="100,100">&lt;div class=&quot;poem&quot;&gt;
+*/</tw-passagedata><tw-passagedata pid="5" name="Poem" tags="" position="600,100" size="100,100">&lt;div class=&quot;poem&quot;&gt;
 The skies they were ashen and sober;
 The leaves they were crisped and sere—
 The leaves they were withering and sere;
@@ -3571,7 +3572,7 @@ This ghoul—haunted woodland of Weir.&quot;
   Edgar Allen Poe - Ulalume\
 &lt;/div&gt;\
 &lt;/div&gt;\
-[[Return|previous()]]</tw-passagedata><tw-passagedata pid="5" name="Begin" tags="start" position="600,100" size="100,100">\
+[[Return|previous()]]</tw-passagedata><tw-passagedata pid="6" name="Begin" tags="start" position="725,100" size="100,100">\
 /* https://etc.usf.edu/lit2go/147/the-works-of-edgar-allan-poe/5260/ulalume/ */\
 &lt;div class=&quot;poem&quot;&gt;\
 The skies they were ashen and sober;
@@ -3586,7 +3587,7 @@ In the ghoul—haunted woodland of [[Weir]]...
 &lt;div align=&quot;right&quot;&gt;\
   from [[Edgar Allen Poe - Ulalume|Poem]]\
 &lt;/div&gt;\
-&lt;/div&gt;\</tw-passagedata><tw-passagedata pid="6" name="Weir" tags="grave" position="725,100" size="100,100">\
+&lt;/div&gt;\</tw-passagedata><tw-passagedata pid="7" name="Weir" tags="grave" position="850,100" size="100,100">\
 &lt;div class=&quot;poem&quot;&gt;\
 ...And we passed to the end of the vista,
 But were stopped by the door of a tomb—
@@ -3609,11 +3610,11 @@ Beware, the lords of the dead prefer to keep their treasures entombed.
 
 You gather your courage and place your hands on a rusted iron gate guarding the mausoleum.  &lt;&lt;= either(_starts)&gt;&gt;.
 
-/* Now the procgen begins */</tw-passagedata><tw-passagedata pid="7" name="Interact" tags="" position="850,100" size="100,100">Hey it me, &lt;&lt;= $enemy.name&gt;&gt;, &lt;&lt;= setup.getCharInfo($enemy)&gt;&gt;! 
+/* Now the procgen begins */</tw-passagedata><tw-passagedata pid="8" name="Interact" tags="" position="975,100" size="100,100">Hey it me, &lt;&lt;= $enemy.name&gt;&gt;, &lt;&lt;= setup.getCharInfo($enemy)&gt;&gt;! 
 
 My HP is $enemy.hp!  What should we do about that?
 
-[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="8" name="ProcGen" tags="proc" position="975,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="9" name="ProcGen" tags="proc" position="1100,100" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;when setup.loadModules&gt;&gt;
 &lt;&lt;run setup.initGame()&gt;&gt;
 &lt;&lt;/when&gt;&gt;
@@ -3631,7 +3632,7 @@ My HP is $enemy.hp!  What should we do about that?
   &lt;div id=&quot;game-instructions&quot;&gt;&lt;/div&gt;
   &lt;div id=&quot;focus-instructions&quot;&gt;Click game for keyboard focus&lt;/div&gt;
 &lt;/figure&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="ProcGen-New" tags="proc" position="1100,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="ProcGen-New" tags="proc" position="1225,100" size="100,100">&lt;&lt;nobr&gt;&gt;
 
 &lt;p id=&quot;anim&quot;&gt;&lt;/p&gt;
 
@@ -3845,7 +3846,7 @@ My HP is $enemy.hp!  What should we do about that?
 &lt;script defer=&quot;defer&quot; src=&quot;third-party/rot.js&quot;&gt;&lt;/script&gt;
 &lt;script defer=&quot;defer&quot; src=&quot;roguelike-dev.js&quot;&gt;&lt;/script&gt;
 
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="ProcGenNew" tags="proc" position="1225,100" size="100,100">ROT.js time
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="ProcGenNew" tags="proc" position="100,225" size="100,100">ROT.js time
 
 &lt;!-- 
   &lt;div class=&quot;container&quot;&gt;
@@ -3859,7 +3860,7 @@ My HP is $enemy.hp!  What should we do about that?
     &lt;div id=&#39;procgen-content&#39;&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;&lt;/when&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="ProcGen2" tags="proc" position="100,225" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="ProcGen2" tags="proc" position="225,225" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!
 You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt;&lt;= setup.player.depth+1&gt;&gt;)!
 
@@ -4000,7 +4001,7 @@ You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt
 &lt;&lt;/when&gt;&gt;\
 /* 
   &lt;&lt;=UI.alert(&quot;You smell of elderberries&quot;);&gt;&gt;
-*/</tw-passagedata><tw-passagedata pid="12" name="Intended" tags="" position="225,225" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
+*/</tw-passagedata><tw-passagedata pid="13" name="Intended" tags="" position="350,225" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
 
 Your intended lies cold on a slab of marble.  A horrific scar marks the corpse; dried blood crusts the pale skin.  Evidence of your rage personified.</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">

@@ -322,7 +322,7 @@ img.full-width {
 }
 
 #back {
-  background: url(http://www.tranexnet.com/img/back.png) repeat 20% 20%;
+  background: url('assets/back.png') repeat 20% 20%;
   position: fixed;
   top: 0;
   left: 0;
@@ -349,7 +349,7 @@ img.full-width {
 }
 
 #front {
-  background: url(http://www.tranexnet.com/img/front.png) repeat 35% 35%;
+  background: url('assets/front.png') repeat 35% 35%;
   position: fixed;
   top: 0;
   left: 0;
