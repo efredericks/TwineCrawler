@@ -93,7 +93,6 @@ Their sulphurous currents down Yaanek
 In the ultimate climes of the pole—
 That groan as they roll down Mount Yaanek
 In the realms of the boreal pole.
-
 Our talk had been serious and sober,
 But our thoughts they were palsied and sere—
 Our memories were treacherous and sere—
@@ -233,9 +232,19 @@ My HP is $enemy.hp!  What should we do about that?
 
 [[Go Back! | ProcGen]]
 
+:: ProcGenText [proc]
+<<nobr>>
+<<set _convs to ["Hey there friendo", "What are we up to today", "Have you seen this yet?"]>>
+<<set _c to either(_convs)>>
+<</nobr>>
+Welcome to hell <<=setup.player.name>>.
+
+[[ _c | ProcGenText]]
+
 :: ProcGen [proc]
 <<nobr>>
 <<when setup.loadModules>>
+[[Test out text interactions | ProcGenText]]
 <<run setup.initGame()>>
 <</when>>
 <figure id="main_figure">

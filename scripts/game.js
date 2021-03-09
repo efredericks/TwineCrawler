@@ -925,6 +925,31 @@ function initROT() {
   window.focus();
 }
 
+/************************* Text interaciton FXNS */
+/*
+const dialogue = [
+  {text: "Nice day isn't it?",
+   attrs: ['goodness'],
+   threshold=0,
+  impact=0}
+
+];
+class txtEnemy {
+  constructor(name, depth, aggro) {
+    this.name = name;
+    this.depth = depth;
+    this.aggro = aggro;
+  }
+};*/
+
+function initTextInteractions() {
+  // generate 5 enemies with varying dialogue, names, etc.
+  // based on how you interact, your attributes will change
+  // based on your attributes your ending/dialogue options will change as well
+
+
+}
+
 /************************* RL DEV FXNS */
 function initRLDev() {
   //console.log("yo");
@@ -1202,6 +1227,12 @@ let player = (function() {
             xp: 0, level: 1,
             inventory: createInventoryArray(26),
             equipment: createInventoryArray(26),
+            // dialogue stats
+            goodness: 0,
+            intelligence: 0,
+            dexterity: 0,
+            strength: 0,
+            name: 'erik',
         }
     );
 
@@ -1214,6 +1245,7 @@ let player = (function() {
     equip(EQUIP_OFF_HAND, 'towel');
     return player;
 })();
+setup.player = player;
 
 function setFlavorTextRoom(room) {
   room.flavorText = randomListItem(roomFlavorTexts);
@@ -2122,6 +2154,10 @@ setup.initGame = function() {
   //$("#passage-procgen").append("<p align='center' id='canvas'></p>");
   //initROT();
   initRLDev();
+
+
+  // trying out text gaming prior to merging into graphical game
+  initTextInteractions();
 
 }
 

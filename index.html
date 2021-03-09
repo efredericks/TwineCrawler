@@ -1949,6 +1949,31 @@ function initROT() {
   window.focus();
 }
 
+/************************* Text interaciton FXNS */
+/*
+const dialogue = [
+  {text: "Nice day isn't it?",
+   attrs: ['goodness'],
+   threshold=0,
+  impact=0}
+
+];
+class txtEnemy {
+  constructor(name, depth, aggro) {
+    this.name = name;
+    this.depth = depth;
+    this.aggro = aggro;
+  }
+};*/
+
+function initTextInteractions() {
+  // generate 5 enemies with varying dialogue, names, etc.
+  // based on how you interact, your attributes will change
+  // based on your attributes your ending/dialogue options will change as well
+
+
+}
+
 /************************* RL DEV FXNS */
 function initRLDev() {
   //console.log("yo");
@@ -2226,6 +2251,12 @@ let player = (function() {
             xp: 0, level: 1,
             inventory: createInventoryArray(26),
             equipment: createInventoryArray(26),
+            // dialogue stats
+            goodness: 0,
+            intelligence: 0,
+            dexterity: 0,
+            strength: 0,
+            name: 'erik',
         }
     );
 
@@ -2238,6 +2269,7 @@ let player = (function() {
     equip(EQUIP_OFF_HAND, 'towel');
     return player;
 })();
+setup.player = player;
 
 function setFlavorTextRoom(room) {
   room.flavorText = randomListItem(roomFlavorTexts);
@@ -3147,6 +3179,10 @@ setup.initGame = function() {
   //initROT();
   initRLDev();
 
+
+  // trying out text gaming prior to merging into graphical game
+  initTextInteractions();
+
 }
 
 // Load all modules and return a promise here
@@ -3486,7 +3522,6 @@ Their sulphurous currents down Yaanek
 In the ultimate climes of the pole—
 That groan as they roll down Mount Yaanek
 In the realms of the boreal pole.
-
 Our talk had been serious and sober,
 But our thoughts they were palsied and sere—
 Our memories were treacherous and sere—
@@ -3614,8 +3649,15 @@ You gather your courage and place your hands on a rusted iron gate guarding the 
 
 My HP is $enemy.hp!  What should we do about that?
 
-[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="9" name="ProcGen" tags="proc" position="1100,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+[[Go Back! | ProcGen]]</tw-passagedata><tw-passagedata pid="9" name="ProcGenText" tags="proc" position="1100,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _convs to [&quot;Hey there friendo&quot;, &quot;What are we up to today&quot;, &quot;Have you seen this yet?&quot;]&gt;&gt;
+&lt;&lt;set _c to either(_convs)&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+Welcome to hell &lt;&lt;=setup.player.name&gt;&gt;.
+
+[[ _c | ProcGenText]]</tw-passagedata><tw-passagedata pid="10" name="ProcGen" tags="proc" position="1225,100" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;when setup.loadModules&gt;&gt;
+[[Test out text interactions | ProcGenText]]
 &lt;&lt;run setup.initGame()&gt;&gt;
 &lt;&lt;/when&gt;&gt;
 &lt;figure id=&quot;main_figure&quot;&gt;
@@ -3632,7 +3674,7 @@ My HP is $enemy.hp!  What should we do about that?
   &lt;div id=&quot;game-instructions&quot;&gt;&lt;/div&gt;
   &lt;div id=&quot;focus-instructions&quot;&gt;Click game for keyboard focus&lt;/div&gt;
 &lt;/figure&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="ProcGen-New" tags="proc" position="1225,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="ProcGen-New" tags="proc" position="100,225" size="100,100">&lt;&lt;nobr&gt;&gt;
 
 &lt;p id=&quot;anim&quot;&gt;&lt;/p&gt;
 
@@ -3846,7 +3888,7 @@ My HP is $enemy.hp!  What should we do about that?
 &lt;script defer=&quot;defer&quot; src=&quot;third-party/rot.js&quot;&gt;&lt;/script&gt;
 &lt;script defer=&quot;defer&quot; src=&quot;roguelike-dev.js&quot;&gt;&lt;/script&gt;
 
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="ProcGenNew" tags="proc" position="100,225" size="100,100">ROT.js time
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="ProcGenNew" tags="proc" position="225,225" size="100,100">ROT.js time
 
 &lt;!-- 
   &lt;div class=&quot;container&quot;&gt;
@@ -3860,7 +3902,7 @@ My HP is $enemy.hp!  What should we do about that?
     &lt;div id=&#39;procgen-content&#39;&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;&lt;/when&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="ProcGen2" tags="proc" position="225,225" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="ProcGen2" tags="proc" position="350,225" size="100,100">&lt;&lt;when setup.loadModules&gt;&gt;\
 Welcome to TwineCrawler &lt;&lt;= setup.player.name&gt;&gt;!
 You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt;&lt;= setup.player.depth+1&gt;&gt;)!
 
@@ -4001,7 +4043,7 @@ You are in &lt;&lt;= setup.map.maps_names[setup.player.depth]&gt;&gt; (Depth &lt
 &lt;&lt;/when&gt;&gt;\
 /* 
   &lt;&lt;=UI.alert(&quot;You smell of elderberries&quot;);&gt;&gt;
-*/</tw-passagedata><tw-passagedata pid="13" name="Intended" tags="" position="350,225" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
+*/</tw-passagedata><tw-passagedata pid="14" name="Intended" tags="" position="475,225" size="100,100">/* Based on what has happened thus far, either you did it or it was something else? */\
 
 Your intended lies cold on a slab of marble.  A horrific scar marks the corpse; dried blood crusts the pale skin.  Evidence of your rage personified.</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
