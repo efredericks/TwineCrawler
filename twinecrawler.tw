@@ -237,9 +237,10 @@ My HP is $enemy.hp!  What should we do about that?
 <<set _convs to ["Hey there friendo", "What are we up to today", "Have you seen this yet?"]>>
 <<set _c to either(_convs)>>
 <</nobr>>
-Welcome to hell <<=setup.player.name>>.
 
-[[ _c | ProcGenText]]
+<<linkreplace _c>>
+Welcome to hell <<=setup.player.name>>.
+<</linkreplace>>
 
 :: ProcGen [proc]
 <<nobr>>

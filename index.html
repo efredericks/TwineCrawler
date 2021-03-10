@@ -3653,9 +3653,10 @@ My HP is $enemy.hp!  What should we do about that?
 &lt;&lt;set _convs to [&quot;Hey there friendo&quot;, &quot;What are we up to today&quot;, &quot;Have you seen this yet?&quot;]&gt;&gt;
 &lt;&lt;set _c to either(_convs)&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-Welcome to hell &lt;&lt;=setup.player.name&gt;&gt;.
 
-[[ _c | ProcGenText]]</tw-passagedata><tw-passagedata pid="10" name="ProcGen" tags="proc" position="1225,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;linkreplace _c&gt;&gt;
+Welcome to hell &lt;&lt;=setup.player.name&gt;&gt;.
+&lt;&lt;/linkreplace&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="ProcGen" tags="proc" position="1225,100" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;when setup.loadModules&gt;&gt;
 [[Test out text interactions | ProcGenText]]
 &lt;&lt;run setup.initGame()&gt;&gt;
