@@ -234,11 +234,10 @@ My HP is $enemy.hp!  What should we do about that?
 
 :: ProcGenText [proc]
 <<nobr>>
-<<set _convs to ["Hey there friendo", "What are we up to today", "Have you seen this yet?"]>>
-<<set _c to either(_convs)>>
+<<set _curr_enemy to setup.textEnemies['Lord of the Pit']>>
 <</nobr>>
 
-<<linkreplace _c>>
+<<linkreplace _curr_enemy.conv[_curr_enemy.conv_index]>>
 Welcome to hell <<=setup.player.name>>.
 <</linkreplace>>
 

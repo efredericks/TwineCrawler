@@ -947,7 +947,23 @@ function initTextInteractions() {
   // based on how you interact, your attributes will change
   // based on your attributes your ending/dialogue options will change as well
 
-
+  setup.textEnemies = {
+    'Lord of the Pit': {
+      'level': 1,
+      'hp': 100,
+      'def': 100,
+      'int': 10,
+      'dex': 10,
+      'conv_index': 0,
+      'conv': [
+        "Hello there " + setup.player.name + ", how is it going?",
+        "Would you like to hear a tale of the depths?",
+        "We have been stuck here for so long.",
+        "Far too long.",
+        "OK I'm done now byeeee."
+      ],
+    },
+  };
 }
 
 /************************* RL DEV FXNS */
