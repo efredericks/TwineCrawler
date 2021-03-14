@@ -235,11 +235,21 @@ My HP is $enemy.hp!  What should we do about that?
 :: ProcGenText [proc]
 <<nobr>>
 <<set _curr_enemy to setup.textEnemies['Lord of the Pit']>>
+<<= _curr_enemy.conv[_curr_enemy.conv_index]>>
+<<set _curr_enemy.conv_index = _curr_enemy.conv_index + 1>>
+<<if _curr_enemy.conv_index >= _curr_enemy.conv.length>>
+  <<set _curr_enemy.conv_index = 0>>
+<</if>>
 <</nobr>>
+<<link "next" `passage()`>><</link>>
 
-<<linkreplace _curr_enemy.conv[_curr_enemy.conv_index]>>
+/*<<linkreplace _curr_enemy.conv[_curr_enemy.conv_index]>>
 Welcome to hell <<=setup.player.name>>.
 <</linkreplace>>
+*/
+
+
+
 
 :: ProcGen [proc]
 <<nobr>>
