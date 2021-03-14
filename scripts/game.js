@@ -1661,7 +1661,7 @@ function initRLDev() {
     if (attacker.id !== player.id) {
       print(`${attacker.name}: ${attacker.conv[attacker.conv_index]}`, color);
       attacker.conv_index++;
-      if (attacker.conv_index > attacker.conv.length)
+      if (attacker.conv_index >= attacker.conv.length)
         attacker.conv_index = 0;
     }
 
